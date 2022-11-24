@@ -1,11 +1,9 @@
 package controllers.Auth;
 
-import com.google.gson.Gson;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,16 +17,23 @@ public class Login extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        HttpSession session = request.getSession();
-        System.out.println(session.getId());
-        System.out.println("Duchoang");
-        Gson g = new Gson();
-        response.setContentType("application/json");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        if (username != "" && password != "") {
+            response.sendRedirect("index.jsp");
+        } else {
+            response.sendRedirect("error.jsp");
+        }
+        response.setContentType("text/html");
 
         // Hello
         PrintWriter out = response.getWriter();
         out.println("<html><body>");
         out.println("<h1>" + message + "</h1>");
+        out.println("<h2>" + "username: " + username + "</h2>");
+        out.println("<h2>" + "password: " + password + "</h2>");
+
         out.println("</body></html>");
     }
 

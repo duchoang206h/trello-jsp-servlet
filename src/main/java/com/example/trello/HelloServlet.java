@@ -19,7 +19,7 @@ public class HelloServlet extends HttpServlet {
         System.out.println(session.getId());
         System.out.println("Duchoang");
         Gson g = new Gson();
-        response.setContentType("application/json");
+        response.setContentType("text/html");
 
         // Hello
         PrintWriter out = response.getWriter();
