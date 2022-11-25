@@ -1,12 +1,12 @@
-package com.example.ltmang.Auth;
+package controller.Auth;
 
 import java.io.*;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "registerServlet", value = "/auth/register")
-public class RegisterServlet extends HttpServlet {
+@WebServlet(name = "loginServlet", value = "/auth/login")
+public class LoginServlet extends HttpServlet {
     private String message;
 
     public void init() {

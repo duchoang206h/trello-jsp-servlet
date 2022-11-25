@@ -1,4 +1,4 @@
-package com.example.ltmang;
+package controller;
 
 import java.io.*;
 
