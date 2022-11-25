@@ -9,12 +9,12 @@
 </head>
 <body>
 <div class="nav-bar">
-    <div class="nav-logo">
+    <a href="home" class="nav-logo">
         <img alt="brand logo" class="trello-logo" src="https://trello-clone-one.vercel.app/trello-logo.svg">
-    </div>
+    </a>
     <div class="nav-right-container">
-        <a class="login-btn" href="login.jsp">Log in</a>
-        <a class="signup-btn" href="registed.jsp">Sign up</a>
+        <a class="btn login-btn" href="login.jsp">Log in</a>
+        <a class="btn signup-btn" href="registed.jsp">Sign up</a>
     </div>
 </div>
 <div class="container">

@@ -6,5 +6,5 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<img src="https://trello-clone-one.vercel.app/under-construction.svg" alt="under construction">
 <h2>Under constructions...</h2>
+<img class="image-center" src="https://trello-clone-one.vercel.app/under-construction.svg" alt="under construction">

@@ -8,4 +8,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <h2>Hello!!!</h2>
 <h4>Đây là trang chủ</h4>
-<p>Không có gì ở đây đâu :>></p>
+<p>Không có gì ở đây đâu :> , hãy đến trang Boards</p>
