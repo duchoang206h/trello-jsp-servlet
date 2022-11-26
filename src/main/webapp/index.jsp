@@ -13,7 +13,7 @@
         <img alt="brand logo" class="trello-logo" src="https://trello-clone-one.vercel.app/trello-logo.svg">
     </a>
     <div class="nav-right-container">
-        <a class="btn login-btn" href="sign-in">Sign in</a>
+        <a class="btn login-btn" href="login">Sign in</a>
         <a class="btn signup-btn" href="register">Register</a>
     </div>
 </div>

@@ -10,9 +10,13 @@ import java.io.IOException;
 public class HomeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("VIEW", "views/home.jsp");
-        RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
-        rd.forward(request, response);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("isAuthenticated") == null) response.sendRedirect("/login");
+        else{
+            request.setAttribute("VIEW", "views/home.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
+            rd.forward(request, response);
+        }
     }
 
     @Override
