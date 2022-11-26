@@ -1,4 +1,4 @@
-package navigation;
+package controllers;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -6,11 +6,12 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "LoginServlet", value = "/sign-in")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "BoardsServlet", value = "/boards")
+public class BoardsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher rd = request.getRequestDispatcher("views/login.jsp");
+        request.setAttribute("VIEW", "views/boards.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
         rd.forward(request, response);
     }
 
