@@ -165,7 +165,7 @@ a {
 }
 
 .btn:hover {
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .login-btn {
@@ -238,11 +238,15 @@ a {
     height: 74px;
     display: flex;
     align-items: center;
-    margin: 5px 0;
+    margin: 10px 0;
     padding: 0 16px;
     background-color: #edf2f7;
     border-radius: 14px;
     font-weight: 600;
+}
+
+a.sidebar-nav-item:hover {
+    background-color: #b9e0f9;
 }
 
 .sidebar-item-icon svg{

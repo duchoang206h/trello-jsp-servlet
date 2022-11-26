@@ -10,7 +10,7 @@ import java.io.IOException;
 public class SettingsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("VIEW", "/settings.jsp");
+        request.setAttribute("VIEW", "views/settings.jsp");
         RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
         rd.forward(request, response);
     }

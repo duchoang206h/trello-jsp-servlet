@@ -10,7 +10,7 @@ import java.io.IOException;
 public class TemplatesServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("VIEW", "/templates.jsp");
+        request.setAttribute("VIEW", "views/templates.jsp");
         RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
         rd.forward(request, response);
     }

@@ -23,7 +23,7 @@ public class Login extends HttpServlet {
         if (username != "" && password != "") {
             response.sendRedirect("index.jsp");
         } else {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("views/error.jsp");
         }
         response.setContentType("text/html");
 

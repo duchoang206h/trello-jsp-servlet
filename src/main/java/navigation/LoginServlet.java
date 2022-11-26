@@ -6,12 +6,11 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
-@WebServlet(name = "HomeServlet", value = "/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet(name = "LoginServlet", value = "/sign-in")
+public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("VIEW", "views/home.jsp");
-        RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("views/login.jsp");
         rd.forward(request, response);
     }
 

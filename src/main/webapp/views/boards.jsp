@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <button class="btn create-board-btn">+ Creat a board</button>
 <div class="row">
-    <a href="boardHadId.jsp" class="board-container">
+    <a href="views/boardHadId.jsp" class="board-container">
         <span class="board-name">Hello</span>
     </a>
 </div>
