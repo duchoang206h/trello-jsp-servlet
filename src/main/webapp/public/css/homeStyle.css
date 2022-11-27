@@ -309,6 +309,8 @@ a.sidebar-nav-item:hover {
     max-width: calc(100% - 32px);
     position: relative;
     animation: modalRunDown ease 0.5s;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .modal-header {
@@ -349,6 +351,7 @@ a.sidebar-nav-item:hover {
     line-height: 1.6;
     margin-bottom: 20px;
     border: 2px solid #ccc;
+    border-radius: 8px;
     width: 100%;
     font-size: 18px;
 }
@@ -360,6 +363,7 @@ a.sidebar-nav-item:hover {
     color: #fff;
     font-size: 20px;
     border: none;
+    border-radius: 8px;
 }
 
 .create-btn:hover{
