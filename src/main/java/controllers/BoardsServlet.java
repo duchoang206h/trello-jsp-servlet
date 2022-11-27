@@ -30,7 +30,7 @@ public class BoardsServlet extends HttpServlet {
             int boardId = Integer.parseInt(pathInfo.replace("/", ""));
             HttpSession session = request.getSession();
             session.setAttribute("boardId", boardId);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/login.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
             rd.forward(request, response);
         }
     }
