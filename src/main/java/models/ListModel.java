@@ -5,7 +5,12 @@ public class ListModel {
     private String name;
     private int order;
     private int boardId;
-
+    public ListModel(){}
+    public ListModel(String name, int boardId, int order){
+        this.name = name;
+        this.boardId = boardId;
+        this.order = order;
+    }
     public int getId() {
         return id;
     }

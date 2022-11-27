@@ -34,7 +34,7 @@ public class CardDAO {
     public ArrayList<CardModel> findByListIdAndBoardId (int listId, int boarId){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "select * from cards where listId = ? and boardId = ? ";
+            String sql = "select * from cards where listId = ? and boardId = ? order by cards.order";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, listId);

@@ -67,6 +67,20 @@ public class BoardDAO {
             return null;
         }
     }
+    public boolean updateName(String name, int boardId) {
+        try {
+            String sql = "update boards set name = ? where id = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setInt(2, boardId);
+            ps.executeQuery();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
 
 }

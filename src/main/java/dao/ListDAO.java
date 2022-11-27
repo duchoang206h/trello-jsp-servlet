@@ -72,5 +72,36 @@ public class ListDAO {
         }
     }
 
+    public int getLatestOrder (int boardId){
+        try {
+            String sql = "select max(`order`) as maxorder from lists where boardId = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, boardId);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt("maxorder");
+            }
+            return 0;
+        }catch (Exception e){
+            return 0;
+        }
+    }
+    public boolean updateOrder(int order, int listId) {
+        try {
+            String sql = "update lists set order = ? where id = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, order);
+            ps.setInt(2, listId);
+            ps.executeQuery();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
 
 }
