@@ -22,7 +22,7 @@ modalCloses.forEach(modalClose => {
 
 // Đóng khi click ra ngoài form
 modal.addEventListener('click', hideModal);
-// cardModal.addEventListener('click', hideModal);
+cardModal.addEventListener('click', hideModal);
 
 modalContainers.forEach(modalContainer => {
     modalContainer.addEventListener('click', function (event) {

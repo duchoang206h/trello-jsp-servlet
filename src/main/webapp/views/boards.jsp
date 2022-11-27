@@ -15,7 +15,7 @@
         System.out.println((int)session.getAttribute("userId"));
         ArrayList<BoardModel> boards = boardDAO.findAllByUserId((int)session.getAttribute("userId"));
         if (boards.size() != 0) for(BoardModel board: boards){
-    %> <a href="views/boardDetail.jsp" class="board-container">
+    %> <a href="boards/<%= board.getId() %>" class="board-container">
     <span class="board-name"><%= board.getName() %></span>
 </a> <%
     }
