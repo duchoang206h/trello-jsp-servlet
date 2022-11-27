@@ -7,6 +7,7 @@ const modalContainers = document.querySelectorAll('.js-modal-container');
 // Hàm hiển thị modal
 function showModal () {
     modal.classList.add('open');
+    modal.querySelector('.modal-input').focus();
 }
 
 // Hàm ẩn modal
@@ -62,6 +63,14 @@ const listItems = document.querySelectorAll(".list-item");
 listItems.forEach((listItem, index) => {
     listItem.addEventListener('click', (event) => {
         cardModal.classList.add('open');
+        const parent = event.target.parentElement;
+        const listId = parent.dataset['index'];
+        const cardId = event.target.dataset['index'];
+        const  boardId = parent.parentElement.dataset['index'];
+        console.log(boardId, listId, cardId);
+        cardModal.querySelector("#board-id").value = boardId;
+        cardModal.querySelector("#list-id").value = listId;
+        cardModal.querySelector("#card-id").value = cardId;
         const input = cardModal.querySelector("#edit-card");
         input.value = event.target.textContent;
         input.focus();
