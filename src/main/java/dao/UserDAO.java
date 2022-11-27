@@ -15,7 +15,6 @@ public class UserDAO {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
             ps.setString(3, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
-            System.out.print(ps);
             ps.executeUpdate();
             con.close();
             return true;
@@ -51,7 +50,6 @@ public class UserDAO {
     public UserModel validate( String email, String password){
         try {
                 UserModel user = this.findOneByEmail(email);
-                System.out.println("password"+ user.getPassword());
                 if(user != null && BCrypt.checkpw(password, user.getPassword())) return user;
                 return null;
         }catch (Exception e){

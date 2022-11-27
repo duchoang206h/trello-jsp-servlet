@@ -19,6 +19,9 @@ public class BoardsServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
             rd.forward(request, response);
         }else{
+            int boardId = Integer.parseInt(pathInfo.replace("/", ""));
+            HttpSession session = request.getSession();
+            session.setAttribute("boardId", boardId);
             request.setAttribute("VIEW", "views/boardDetail.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
             rd.forward(request, response);

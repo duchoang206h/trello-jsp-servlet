@@ -23,7 +23,6 @@ public class LoginServlet extends HttpServlet {
             String err = "";
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            System.out.println(password);
             UserModel user = this.userDAO.validate(email, password);
             if(user !=null){
                 HttpSession session = request.getSession();
