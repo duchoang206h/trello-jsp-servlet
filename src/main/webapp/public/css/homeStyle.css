@@ -192,7 +192,7 @@ a {
 
 .container {
     width: 100%;
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .row {
@@ -259,7 +259,7 @@ a.sidebar-nav-item:hover {
     border-radius: 14px;
     border: 2px solid #f0f0f0;
     padding: 10px;
-    margin: 0 40px;
+    margin: 0 20px 0 40px;
 }
 
 .image-center {
@@ -286,3 +286,104 @@ a.sidebar-nav-item:hover {
     transform: translateX(-50%) translateY(-50%);
 }
 
+/* modal */
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+
+.modal.open {
+    display: flex;
+}
+
+.modal-container{
+    background-color: #fff;
+    width: 380px;
+    max-width: calc(100% - 32px);
+    position: relative;
+    animation: modalRunDown ease 0.5s;
+}
+
+.modal-header {
+    background-color: #009688;
+    text-align: center;
+    height: 100%;
+    line-height: 80px;
+    font-size: 36px;
+    color: #fff;
+    letter-spacing: 4px;
+}
+
+.modal-heading {
+    margin: 0 0 36px 0;
+}
+
+.modal-close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    color: #fff;
+    opacity: 0.7;
+}
+
+.modal-close:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 0 15px;
+}
+
+.modal-input {
+    display: block;
+    padding: 10px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    width: 100%;
+    font-size: 18px;
+}
+
+.create-btn{
+    width: 100%;
+    padding: 16px;
+    background-color: #009688;
+    color: #fff;
+    font-size: 20px;
+    border: none;
+}
+
+.create-btn:hover{
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.modal-footer{
+    margin: 20px 10px;
+    float: right;
+}
+
+.modal-footer a{
+    color: aqua;
+}
+
+@keyframes modalRunDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

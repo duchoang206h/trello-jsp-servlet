@@ -17,7 +17,7 @@
         <!-- Masthead -->
         <header class="masthead">
 
-            <a href="home" class="home-btn btn">
+            <a href="/home" class="home-btn btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
                     <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146ZM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5Z"/>
                 </svg>
@@ -25,7 +25,7 @@
 
             <div class="boards-menu">
 
-                <a href="boards" class="boards-btn btn">Boards</a>
+                <a href="/boards" class="boards-btn btn">Boards</a>
 
                 <div class="board-search">
                     <input type="search" class="board-search-input" aria-label="Board Search">
@@ -112,228 +112,90 @@
                     <li>Listen to new CodePen Radio episode</li>
                 </ul>
 
-                <button class="add-card-btn btn">Add a card</button>
+                <form action="" method="post" class="form-add-card">
+                    <textarea rows="2" class="input-add-card" name="input-card"></textarea>
+                    <button type="button" class="add-card-btn btn">Add a card</button>
+                </form>
 
             </div>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Completed Tasks</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>Clear email inbox</li>--%>
-<%--                    <li>Finalise requirements for client web design</li>--%>
-<%--                    <li>Begin work on mock-up for client website</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Topics/Concepts to Revise</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>HTML Elements</li>--%>
-<%--                    <li>HTML Form Validation</li>--%>
-<%--                    <li>HTML Structured Data</li>--%>
-<%--                    <li>Advanced CSS Selectors</li>--%>
-<%--                    <li>CSS Transforms</li>--%>
-<%--                    <li>CSS Animations</li>--%>
-<%--                    <li>CSS Flexbox</li>--%>
-<%--                    <li>CSS Grid</li>--%>
-<%--                    <li>CSS Methodologies (BEM, SMACSS etc.)</li>--%>
-<%--                    <li>SASS/SCSS</li>--%>
-<%--                    <li>Layout Fallbacks</li>--%>
-<%--                    <li>Responsive Design</li>--%>
-<%--                    <li>Design Patterns</li>--%>
-<%--                    <li>JavaScript Fundamentals</li>--%>
-<%--                    <li>JavaScript OOP</li>--%>
-<%--                    <li>JavaScript DOM Manipulation</li>--%>
-<%--                    <li>JavaScript Debugging Techniques</li>--%>
-<%--                    <li>Node Package Manager</li>--%>
-<%--                    <li>Grunt/Gulp</li>--%>
-<%--                    <li>GitHub</li>--%>
-<%--                    <li>Git Commands</li>--%>
-<%--                    <li>Web Accessibility</li>--%>
-<%--                    <li>Web Performance</li>--%>
-<%--                    <li>Web Hosting</li>--%>
-<%--                    <li>Browser Dev Tools</li>--%>
-<%--                    <li>Google Analytics</li>--%>
-<%--                    <li>Basic Photoshop/Sketch Usage</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Topics/Concepts to Learn</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>HTML 5.2 New Features</li>--%>
-<%--                    <li>Responsive Images (picture element, srcset/sizes etc.)</li>--%>
-<%--                    <li>Serverless</li>--%>
-<%--                    <li>Variable Fonts</li>--%>
-<%--                    <li>Shadow DOM</li>--%>
-<%--                    <li>ES6+</li>--%>
-<%--                    <li>JSON & AJAX</li>--%>
-<%--                    <li>API's</li>--%>
-<%--                    <li>JavaScript Patterns</li>--%>
-<%--                    <li>JavaScript Testing</li>--%>
-<%--                    <li>jQuery</li>--%>
-<%--                    <li>SVG</li>--%>
-<%--                    <li>React JS</li>--%>
-<%--                    <li>Angular JS</li>--%>
-<%--                    <li>TypeScript</li>--%>
-<%--                    <li>Vue JS</li>--%>
-<%--                    <li>Node JS</li>--%>
-<%--                    <li>Webpack</li>--%>
-<%--                    <li>SEO Techniques</li>--%>
-<%--                    <li>HTML Emails</li>--%>
-<%--                    <li>WordPress</li>--%>
-<%--                    <li>Static Site Generators (Jekyll, Hugo, Gatsby etc.)</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Useful Websites for Learning</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>Code Academy</li>--%>
-<%--                    <li>CodePen</li>--%>
-<%--                    <li>Codrops</li>--%>
-<%--                    <li>CSS-Tricks</li>--%>
-<%--                    <li>Free Code Camp</li>--%>
-<%--                    <li>Khan Academy</li>--%>
-<%--                    <li>Lynda</li>--%>
-<%--                    <li>Medium</li>--%>
-<%--                    <li>Mozilla Developer Network</li>--%>
-<%--                    <li>Stack Overflow</li>--%>
-<%--                    <li>Team Treehouse</li>--%>
-<%--                    <li>Tuts Plus</li>--%>
-<%--                    <li>Udemy</li>--%>
-<%--                    <li>WPSessions</li>--%>
-<%--                    <li>YouTube</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Web Dev YouTube Channels</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>Adam Khoury</li>--%>
-<%--                    <li>Brad Hussey</li>--%>
-<%--                    <li>CSS-Tricks (Chris Coyier)</li>--%>
-<%--                    <li>Derek Banas</li>--%>
-<%--                    <li>DevTips (Travis Neilson)</li>--%>
-<%--                    <li>Free Code Camp</li>--%>
-<%--                    <li>Fun Fun Function (Mattias Petter Johansson)</li>--%>
-<%--                    <li>Google Chrome Developers</li>--%>
-<%--                    <li>Layout Land (Jen Simmons)</li>--%>
-<%--                    <li>Learn Code Academy</li>--%>
-<%--                    <li>Level Up Tuts (Scott Tolinski)</li>--%>
-<%--                    <li>Mackenzie Child</li>--%>
-<%--                    <li>Rachel Andrew</li>--%>
-<%--                    <li>The Net Ninja (Shaun Pelling)</li>--%>
-<%--                    <li>The New Boston (Bucky Roberts)</li>--%>
-<%--                    <li>Traversy Media (Brad Traversy)</li>--%>
-<%--                    <li>Wes Bos</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">CodePen Ideas</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>Something cool with CSS Grid</li>--%>
-<%--                    <li>Something cool with CSS Flexbox</li>--%>
-<%--                    <li>Something cool with CSS animations</li>--%>
-<%--                    <li>Something cool with CSS gradients</li>--%>
-<%--                    <li>Something cool with CSS pseudo-elements</li>--%>
-<%--                    <li>Something cool with SVG</li>--%>
-<%--                    <li>Something cool with JavaScript</li>--%>
-<%--                    <li>Something cool with all of the above</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
-
-<%--            <div class="list">--%>
-
-<%--                <h3 class="list-title">Practise Website Ideas</h3>--%>
-
-<%--                <ul class="list-items">--%>
-<%--                    <li>Airsoft/Paintballing Centre</li>--%>
-<%--                    <li>Bar/Pub</li>--%>
-<%--                    <li>Bicycle Shop/Repair</li>--%>
-<%--                    <li>Cafe/Coffee Shop</li>--%>
-<%--                    <li>Car Showroom/Garage/Repair/Parts</li>--%>
-<%--                    <li>Construction Company</li>--%>
-<%--                    <li>Fitness/Gym/Leisure Centre</li>--%>
-<%--                    <li>Nightclub</li>--%>
-<%--                    <li>Party Planning Company</li>--%>
-<%--                    <li>PC Build/Repair Service</li>--%>
-<%--                    <li>Portfolio/CV</li>--%>
-<%--                    <li>Real Estate/AirBnB</li>--%>
-<%--                    <li>Restaurant</li>--%>
-<%--                    <li>Skiing/Snowboarding Centre/Company</li>--%>
-<%--                    <li>Streaming Service for Movies/TV</li>--%>
-<%--                    <li>Streaming Service for Video Games</li>--%>
-<%--                    <li>Taxi Service</li>--%>
-<%--                    <li>Travel Agency</li>--%>
-<%--                    <li>Zoo/Safari Park</li>--%>
-<%--                </ul>--%>
-
-<%--                <button class="add-card-btn btn">Add a card</button>--%>
-
-<%--            </div>--%>
 
             <div class="list">
 
                 <h3 class="list-title">JavaScript Project Ideas</h3>
 
                 <ul class="list-items">
-                    <li>Analog Clock</li>
-                    <li>Basic Quiz</li>
-                    <li>Bill/Cost Splitter</li>
-                    <li>Countdown Timer</li>
-                    <li>Form Validator</li>
-                    <li>Geolocation (Find places near you etc.)</li>
-                    <li>Gif Search</li>
-                    <li>Note Taking App</li>
-                    <li>Random Name Picker</li>
-                    <li>Secret Message Encoder/Decoder</li>
-                    <li>Sortable Image Gallery</li>
-                    <li>Sortable Table</li>
-                    <li>Tip Calculator</li>
-                    <li>To-Do List</li>
-                    <li>Unit Converter</li>
-                </ul>
+                    <li class="list-item">Analog Clock</li>
+                    <li class="list-item">Basic Quiz</li>
+                    <li class="list-item">Bill/Cost Splitter</li>
+                    <li class="list-item">Countdown Timer</li>
+                    <li class="list-item">Form Validator</li>
 
-                <button class="add-card-btn btn">Add a card</button>
+                </ul>
+                <form action="" method="post" class="form-add-card">
+                    <textarea rows="2" class="input-add-card" name="input-card"></textarea>
+                    <button type="button" class="add-card-btn btn">Add a card</button>
+                </form>
+
 
             </div>
 
-            <button class="add-list-btn btn">Add a list</button>
+            <button class="add-list-btn btn" onclick="showModal()">Add a list</button>
 
         </section>
         <!-- End of lists container -->
     </div>
+<%--    Modal   --%>
+    <div class="modal js-modal">
+        <div class="modal-container js-modal-container">
+            <div class="modal-close js-modal-close">
+                <i>X</i>
+            </div>
+
+            <div class="modal-header">
+                <p class="modal-heading">
+                    Add a list
+                </p>
+            </div>
+
+            <form action="" method="post" id="form-add-list" class="modal-body">
+
+                <input type="text" placeholder="Title" class="modal-input" id="quantity-tickets">
+
+                <button class="create-btn">
+                    Add
+                </button>
+
+                <div class="modal-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <%--  Card  Modal   --%>
+    <div class="card-modal">
+        <div class="card-modal-container js-modal-container">
+            <div class="modal-close js-modal-close">
+                <i>X</i>
+            </div>
+
+            <form action="" method="post" id="form-edit-card" class="modal-body">
+
+                <textarea class="input-edit-card" name="card-content" id="edit-card" rows="3"></textarea>
+
+                <button class="btn update-btn">
+                    Update
+                </button>
+
+                <button type="button" class="btn delete-btn">
+                    Delete
+                </button>
+
+                <div class="modal-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../public/js/main.js"></script>
 </body>
 </html>
