@@ -36,16 +36,11 @@
 
         <form action="" method="post" id="form-create-board" class="modal-body">
 
-            <input type="text" placeholder="Board's name" class="modal-input" id="quantity-tickets">
+            <input type="text" placeholder="Board's name" class="modal-input" id="boardName" name="name">
 
             <button class="create-btn">
                 Create
             </button>
-
-            <div class="modal-footer">
-                Need
-                <a href="#">help?</a>
-            </div>
         </form>
     </div>
 </div>

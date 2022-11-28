@@ -74,31 +74,11 @@
 
 
 <!-- Board info bar -->
-<section class="board-info-bar">
 
-    <div class="board-controls">
-
-        <button class="board-title btn">
-            <h2>Web Development</h2>
-        </button>
-
-        <button class="star-btn btn" aria-label="Star Board">
-            <i class="far fa-star" aria-hidden="true"></i>
-        </button>
-
-        <button class="personal-btn btn">Personal</button>
-
-        <button class="private-btn btn"><i class="fas fa-briefcase private-btn-icon" aria-hidden="true"></i>Private</button>
-
-    </div>
-
-    <button class="menu-btn btn"><i class="fas fa-ellipsis-h menu-btn-icon" aria-hidden="true"></i>Show Menu</button>
-
-</section>
 <!-- End of board info bar -->
 
 <!-- Lists container -->
-<section class="lists-container">
+
 
     <%
         BoardDAO boardDAO = new BoardDAO();
@@ -107,14 +87,27 @@
         BoardModel board  = boardDAO.findOneById((int)session.getAttribute("boardId"));
         System.out.println((int)session.getAttribute("boardId"));
         ArrayList<ListModel> lists = listDAO.findByBoardId(board.getId());
-        if(lists != null) for(ListModel list: lists){
     %>
-    <div data-index="<%=board.getId()%>" class="list">
-        <h3 class="list-title"><%= list.getName()%></h3>
+    <div class="board-info-bar">
+
+        <div class="board-controls">
+
+            <button class="board-title btn">
+                <h2><%= board.getName()%></h2>
+            </button>
+        </div>
+
+    </div>
     <%
+
+        if(lists != null) for(ListModel list: lists){
+
+    %> <div class="lists-container"><%
     ArrayList<CardModel> cards = cardDAO.findByListIdAndBoardId(list.getId(), board.getId());
     if(cards != null) {
         %>
+        <div data-index="<%=board.getId()%>" class="list">
+        <h3 class="list-title"><%= list.getName()%></h3>
         <ul data-index="<%=list.getId()%>" class="list-items">
         <%for(CardModel card: cards){ %>
             <li data-index="<%=card.getId()%>" class="list-item"><%= card.getDescription()%></li> <% } %>
@@ -124,32 +117,13 @@
             <textarea rows="2" class="input-add-card" name="input-card"></textarea>
             <button type="button" class="add-card-btn btn">Add a card</button>
         </form>
+        </div>
     <% } %>
-    </div>
 
-    <div class="list">
-
-        <h3 class="list-title">JavaScript Project Ideas</h3>
-
-        <ul class="list-items">
-            <li class="list-item">Analog Clock</li>
-            <li class="list-item">Basic Quiz</li>
-            <li class="list-item">Bill/Cost Splitter</li>
-            <li class="list-item">Countdown Timer</li>
-            <li class="list-item">Form Validator</li>
-
-        </ul>
-        <form action="" method="post" class="form-add-card">
-            <textarea rows="2" class="input-add-card" name="input-card"></textarea>
-            <button type="button" class="add-card-btn btn">Add a card</button>
-        </form>
-
-
-    </div>
 
     <button class="add-list-btn btn" onclick="showModal()">Add a list</button>
 
-</section>
+</div>
 <!-- End of lists container -->
 </div>
 <%--    Modal   --%>
@@ -164,10 +138,10 @@
                 Add a list
             </p>
         </div>
-
-        <form action="" method="post" id="form-add-list" class="modal-body">
-
-            <input type="text" placeholder="Title" class="modal-input" id="quantity-tickets">
+        <%
+        %><form action="<%= "/boards/" + session.getAttribute("boardId") + "/lists" %>" method="post" id="form-add-list" class="modal-body">
+            <input type="text" value="<%=session.getAttribute("boardId")%>" style="display: none;" name="boardId">
+            <input type="text" placeholder="Title" class="modal-input" id="quantity-tickets" name="name">
 
             <button class="create-btn">
                 Add
@@ -175,7 +149,8 @@
 
             <div class="modal-footer">
             </div>
-        </form>
+        </form> <%
+        %>
     </div>
 </div>
 
@@ -187,9 +162,9 @@
         </div>
 
         <form action="" method="post" id="form-edit-card" class="modal-body">
-            <input type="text" name="card-id" id="card-id">
-            <input type="text" name="list-id" id="list-id">
-            <input type="text" name="board-id" id="board-id">
+            <input type="text" name="card-id" id="card-id" style="display: none">
+            <input type="text" name="list-id" id="list-id" style="display: none">
+            <input type="text" name="board-id" id="board-id" style="display: none">
             <label class="label-edit-card" for="edit-card">Card</label>
             <textarea class="input-edit-card" name="card-content" id="edit-card" rows="4"></textarea>
 

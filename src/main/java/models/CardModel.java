@@ -7,6 +7,13 @@ public class CardModel {
     private int listId;
     private int boardId;
 
+    public CardModel(){}
+    public CardModel(int boardId, int listId, String description, int order){
+        this.boardId = boardId;
+        this.listId = listId;
+        this.description = description;
+        this.order = order;
+    }
     public int getOrder() {
         return order;
     }

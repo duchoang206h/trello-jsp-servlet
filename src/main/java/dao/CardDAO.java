@@ -13,7 +13,7 @@ public class CardDAO {
     public boolean create(CardModel card){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "insert into cards  (description, order, boardId, listId) values (?,?,?,?)";
+            String sql = "insert into cards  (description, `order`, boardId, listId) values (?,?,?,?)";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, card.getDescription());
@@ -34,7 +34,7 @@ public class CardDAO {
     public ArrayList<CardModel> findByListIdAndBoardId (int listId, int boarId){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "select * from cards where listId = ? and boardId = ? order by cards.order";
+            String sql = "select * from cards where listId = ? and boardId = ? order by cards.order DESC ";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, listId);
@@ -74,6 +74,24 @@ public class CardDAO {
             return card;
         }catch (Exception e){
             return null;
+        }
+    }
+    public int findLatestOrderByBoardIdAndListId(int boardId, int listId){
+        try {
+            String sql =  "select max(`order`) as maxorder from cards where boardId = ? and listId = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, boardId);
+            ps.setInt(2, listId);
+            ResultSet rs = ps.executeQuery();
+            CardModel card = new CardModel();
+            while(rs.next()){
+                return rs.getInt("maxorder");
+            }
+            return 0;
+        }catch (Exception e){
+            return 0;
         }
     }
 
