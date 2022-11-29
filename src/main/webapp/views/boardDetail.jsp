@@ -113,39 +113,19 @@
         <h3 class="list-title" data-index="<%=list.getId()%>"><%= list.getName()%></h3>
     <%
     ArrayList<CardModel> cards = cardDAO.findByListIdAndBoardId(list.getId(), board.getId());
-    if(cards != null) {
-        %>
+    if(cards != null) { %>
         <ul data-index="<%=list.getId()%>" class="list-items">
         <%for(CardModel card: cards){ %>
             <li data-index="<%=card.getId()%>" class="list-item"><%= card.getDescription()%></li> <% } %>
-        </ul> <% } %>
-
-        <form action="" method="post" class="form-add-card">
-            <textarea rows="2" class="input-add-card" name="input-card"></textarea>
-            <button type="button" class="add-card-btn btn">Add a card</button>
-        </form>
-    <% } %>
-    </div>
-
-    <div class="list">
-
-        <h3 class="list-title">JavaScript Project Ideas</h3>
-
-        <ul class="list-items">
-            <li class="list-item">Analog Clock</li>
-            <li class="list-item">Basic Quiz</li>
-            <li class="list-item">Bill/Cost Splitter</li>
-            <li class="list-item">Countdown Timer</li>
-            <li class="list-item">Form Validator</li>
-
         </ul>
+        <% } %>
+
         <form action="" method="post" class="form-add-card">
             <textarea rows="2" class="input-add-card" name="input-card"></textarea>
             <button type="button" class="add-card-btn btn">Add a card</button>
         </form>
-
-
     </div>
+    <% } %>
 
     <button class="add-list-btn btn" onclick="showModal()">Add a list</button>
 
@@ -189,7 +169,7 @@
         <form action="" method="post" id="form-edit-list" class="modal-body">
             <input type="text" name="list-id" class="list-id">
             <input type="text" name="board-id" class="board-id">
-            <label class="label-edit-card" for="edit-card">Card</label>
+            <label class="label-edit-card" for="edit-card">List</label>
             <textarea class="input-edit-card" name="card-content" id="edit-list" rows="4"></textarea>
 
             <div class="card-btn-container">

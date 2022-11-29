@@ -62,7 +62,7 @@
         </div>
 
         <form action="" method="post" id="form-edit-board" class="modal-body">
-            <input type="text" name="board-id" id="board-id">
+            <input type="text" name="board-id" id="board-id" class="board-id">
             <textarea class="input-edit-board" name="card-content" id="edit-board" rows="2"></textarea>
 
             <div class="board-modal-btn-container">

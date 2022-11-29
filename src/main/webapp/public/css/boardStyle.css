@@ -424,7 +424,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
     display: none;
 }
 
-.card-modal {
+.card-modal, .list-modal {
     background-color: transparent;
 }
 
@@ -461,7 +461,6 @@ Remove or comment-out the code block below to see how the browser will fall-back
 .modal-header {
     background-color: #4c94be;
     text-align: center;
-    height: 200px;
     line-height: 80px;
     font-size: 36px;
     color: #fff;
@@ -488,7 +487,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 .modal-body {
     width: 100%;
-    padding: 0 15px;
+    padding: 10px 15px;
 }
 
 .modal-input {
@@ -579,4 +578,10 @@ Remove or comment-out the code block below to see how the browser will fall-back
 }
 .delete-btn:hover {
     background-color: #ff6584;
+}
+
+.board-id,
+.list-id,
+.card-id{
+    display: none;
 }
