@@ -11,7 +11,7 @@ public class BoardDAO {
     public boolean create(BoardModel board){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "insert into boards  (name, owerId) values (?,?)";
+            String sql = "insert into boards  (name, ownerId) values (?,?)";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, board.getName());

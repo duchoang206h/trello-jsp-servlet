@@ -12,7 +12,7 @@ public class ListDAO {
     public boolean create(ListModel list){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "insert into lists  (name, order, boardId) values (?,?,?)";
+            String sql = "insert into lists  (name, `order`, boardId) values (?,?,?)";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, list.getName());
