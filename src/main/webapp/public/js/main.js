@@ -91,6 +91,10 @@ cards.forEach((card, index) => {
         input.value = event.target.textContent;
         input.focus();
     })
+    card.addEventListener("submit",async (e) => {
+        e.preventDefault();
+        console.log(e)
+    })
 });
 
 // Sửa hoặc xóa list
@@ -122,7 +126,31 @@ boardEditBtns.forEach((editBtn, index) => {
         input.value = boardName;
         showBoardModal();
         input.focus();
-    })
+    });
+
 });
+document.getElementById("form-edit-card").addEventListener("submit", async (event) => {
+    try {
+        event.preventDefault();
+        console.log(event);
+        // const type = update or delete;
+        // const boardId =
+        // const listId =
+        // const cardId =
+        // const description =
+       /* if(type == "update"){
+            await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
+               boardId,
+               listId,
+               cardId,
+               description
+            })
+        }else{
+            await axios.delete(`/boards/${boardId}/lists/${listId}/cards/${cardId}`)
+        }*/
 
-
+        location.reload();
+    }catch (e) {
+        location.reload();
+    }
+})
