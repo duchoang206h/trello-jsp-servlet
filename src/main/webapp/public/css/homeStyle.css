@@ -285,8 +285,30 @@ a.sidebar-nav-item:hover {
     transform: translateX(-50%) translateY(-50%);
 }
 
-/* modal */
-.modal{
+.board-btn-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.board-edit-btn,
+.board-delete-btn {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #fff;
+}
+
+.board-edit-btn:hover,
+.board-delete-btn:hover {
+    cursor: pointer;
+    background-color: #006aa8;
+}
+
+/* Modal */
+.modal,
+.board-modal{
     position: fixed;
     top: 0;
     left: 0;
@@ -299,11 +321,17 @@ a.sidebar-nav-item:hover {
     display: none;
 }
 
-.modal.open {
+.board-modal {
+    background-color: transparent;
+}
+
+.modal.open,
+.board-modal.open{
     display: flex;
 }
 
-.modal-container{
+.modal-container,
+.board-modal-container{
     background-color: #fff;
     width: 380px;
     max-width: calc(100% - 32px);
@@ -311,6 +339,19 @@ a.sidebar-nav-item:hover {
     animation: modalRunDown ease 0.5s;
     border-radius: 8px;
     overflow: hidden;
+}
+
+.board-modal-container {
+    min-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: darkseagreen;
+    animation: modalRunInto ease 0.5s;
+}
+
+.board-modal-btn-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .modal-header {
@@ -351,9 +392,19 @@ a.sidebar-nav-item:hover {
     line-height: 1.6;
     margin-bottom: 20px;
     border: 2px solid #ccc;
-    border-radius: 8px;
     width: 100%;
     font-size: 18px;
+    border-radius: 8px;
+}
+
+.input-edit-board {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1.4rem;
 }
 
 .create-btn{
@@ -389,4 +440,35 @@ a.sidebar-nav-item:hover {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+@keyframes modalRunInto {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.update-btn, .delete-btn {
+    margin: 0;
+    min-width: 100px;
+    flex-basis: 9rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    padding: 0.6rem 0.8rem;
+    border: solid 1px #fff;
+    border-radius: 8px;
+    background-color: transparent;
+}
+
+.update-btn:hover {
+    background-color: #006aa8;
+}
+.delete-btn:hover {
+    background-color: #ff6584;
 }

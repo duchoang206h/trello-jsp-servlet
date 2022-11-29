@@ -110,7 +110,7 @@
         if(lists != null) for(ListModel list: lists){
     %>
     <div data-index="<%=board.getId()%>" class="list">
-        <h3 class="list-title"><%= list.getName()%></h3>
+        <h3 class="list-title" data-index="<%=list.getId()%>"><%= list.getName()%></h3>
     <%
     ArrayList<CardModel> cards = cardDAO.findByListIdAndBoardId(list.getId(), board.getId());
     if(cards != null) {
@@ -179,17 +179,43 @@
     </div>
 </div>
 
+<%--  List  Modal   --%>
+<div class="list-modal js-modal">
+    <div class="card-modal-container js-modal-container">
+        <div class="modal-close js-modal-close">
+            <i>X</i>
+        </div>
+
+        <form action="" method="post" id="form-edit-list" class="modal-body">
+            <input type="text" name="list-id" class="list-id">
+            <input type="text" name="board-id" class="board-id">
+            <label class="label-edit-card" for="edit-card">Card</label>
+            <textarea class="input-edit-card" name="card-content" id="edit-list" rows="4"></textarea>
+
+            <div class="card-btn-container">
+                <button class="btn update-btn">
+                    Update
+                </button>
+
+                <button type="button" class="btn delete-btn">
+                    Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <%--  Card  Modal   --%>
-<div class="card-modal">
+<div class="card-modal js-modal">
     <div class="card-modal-container js-modal-container">
         <div class="modal-close js-modal-close">
             <i>X</i>
         </div>
 
         <form action="" method="post" id="form-edit-card" class="modal-body">
-            <input type="text" name="card-id" id="card-id">
-            <input type="text" name="list-id" id="list-id">
-            <input type="text" name="board-id" id="board-id">
+            <input type="text" name="card-id" id="card-id" class="card-id">
+            <input type="text" name="list-id" id="list-id" class="list-id">
+            <input type="text" name="board-id" id="board-id" class="board-id">
             <label class="label-edit-card" for="edit-card">Card</label>
             <textarea class="input-edit-card" name="card-content" id="edit-card" rows="4"></textarea>
 

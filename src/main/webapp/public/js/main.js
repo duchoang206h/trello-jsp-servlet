@@ -1,19 +1,36 @@
 // Ẩn hiện modal
-const modal = document.querySelector('.js-modal');
+const modals = document.querySelectorAll('.js-modal');
+const modal = document.querySelector('.modal');
 const cardModal = document.querySelector('.card-modal');
+const listModal = document.querySelector('.list-modal');
+const boardModal = document.querySelector('.board-modal');
+
 const modalCloses = document.querySelectorAll('.js-modal-close');
 const modalContainers = document.querySelectorAll('.js-modal-container');
 
 // Hàm hiển thị modal
 function showModal () {
     modal.classList.add('open');
-    modal.querySelector('.modal-input').focus();
+}
+
+// Hàm hiển thị card-modal
+function showCardModal () {
+    cardModal.classList.add('open');
+}
+
+// Hàm hiển thị list-modal
+function showListModal () {
+    listModal.classList.add('open');
+}
+
+// Hàm hiển thị board-modal
+function showBoardModal () {
+    boardModal.classList.add('open');
 }
 
 // Hàm ẩn modal
 function hideModal () {
-    modal.classList.remove('open');
-    cardModal.classList.remove('open');
+    modals.forEach(modal => modal.classList.remove('open'));
 }
 
 // Close
@@ -22,8 +39,7 @@ modalCloses.forEach(modalClose => {
 })
 
 // Đóng khi click ra ngoài form
-modal.addEventListener('click', hideModal);
-cardModal.addEventListener('click', hideModal);
+modals.forEach(modal => modal.addEventListener('click', hideModal));
 
 modalContainers.forEach(modalContainer => {
     modalContainer.addEventListener('click', function (event) {
@@ -59,10 +75,10 @@ addCardInputs.forEach((addCardInput, index) => {
 });
 
 // Sửa hoặc xóa card
-const listItems = document.querySelectorAll(".list-item");
-listItems.forEach((listItem, index) => {
-    listItem.addEventListener('click', (event) => {
-        cardModal.classList.add('open');
+const cards = document.querySelectorAll(".list-item");
+cards.forEach((card, index) => {
+    card.addEventListener('click', (event) => {
+        showCardModal();
         const parent = event.target.parentElement;
         const listId = parent.dataset['index'];
         const cardId = event.target.dataset['index'];
@@ -73,6 +89,38 @@ listItems.forEach((listItem, index) => {
         cardModal.querySelector("#card-id").value = cardId;
         const input = cardModal.querySelector("#edit-card");
         input.value = event.target.textContent;
+        input.focus();
+    })
+});
+
+// Sửa hoặc xóa list
+const listItems = document.querySelectorAll(".list-title");
+listItems.forEach((listItem, index) => {
+    listItem.addEventListener('click', (event) => {
+        showListModal();
+        const parent = listItem.parentElement;
+        const listId = listItem.dataset['index'];
+        const  boardId = parent.dataset['index'];
+        console.log(boardId, listId);
+        listModal.querySelector(".board-id").value = boardId;
+        listModal.querySelector(".list-id").value = listId;
+        const input = listModal.querySelector("#edit-list");
+        input.value = listItem.textContent;
+        input.focus();
+    })
+});
+
+// Sửa hoặc xóa board
+const boardEditBtns = document.querySelectorAll(".board-edit-btn");
+boardEditBtns.forEach((editBtn, index) => {
+    editBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+        boardModal.querySelector("#board-id").value = editBtn.dataset.index;
+        const boardContainer = document.querySelector('.board-container');
+        const boardName = boardContainer.querySelector(".board-name").textContent;
+        const input = boardModal.querySelector(".input-edit-board");
+        input.value = boardName;
+        showBoardModal();
         input.focus();
     })
 });
