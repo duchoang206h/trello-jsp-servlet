@@ -77,4 +77,30 @@
     </div>
 </div>
 
+
+<nav aria-label="Page navigation example mt-3" >
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <%
+            int totalPage = (int)request.getAttribute("totalPage");
+            if(totalPage> 5) totalPage = 5;
+            for(int i = 1; i<=totalPage; i++){ %>
+             <li class="page-item"><a class="page-link" href="<%= "/boards?page=" + i%>"><%=i%></a></li>
+            <%}
+               %> <li class="page-item"><a class="page-link" href="">...</a></li> <%
+            %>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 <script src="public/js/main.js"></script>

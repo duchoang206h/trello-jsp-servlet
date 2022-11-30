@@ -81,6 +81,30 @@ public class BoardDAO {
             return false;
         }
     }
+    public ArrayList<BoardModel> findByUserIdLimitAndOffset(int userId, int limit, int offset){
+        try {
+            Connection con = DBConnect.getConnection();
+            String sql = "select * from boards where ownerId = ? limit ? offset ?";
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setInt(2, limit);
+            ps.setInt(3, offset);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<BoardModel> boards = new ArrayList<>();
+            while(rs.next()){
+                BoardModel board = new BoardModel();
+                board.setId(rs.getInt("id"));
+                board.setName(rs.getString("name"));
+                board.setOwnerId(rs.getInt("ownerId"));
+                boards.add(board);
+            }
+            return boards;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
 
 
 }
