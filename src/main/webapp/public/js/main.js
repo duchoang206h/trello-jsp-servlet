@@ -116,8 +116,9 @@ boardEditBtns.forEach((editBtn, index) => {
     editBtn.addEventListener('click', (event) => {
         event.preventDefault();
         boardModal.querySelector("#board-id").value = editBtn.dataset.index;
-        const boardContainer = document.querySelector('.board-container');
-        const boardName = boardContainer.querySelector(".board-name").textContent;
+        const boardContainer = editBtn.parentElement;
+        const boardName = boardContainer.parentElement.querySelector('.board-name').textContent;
+
         const input = boardModal.querySelector(".input-edit-board");
         input.value = boardName;
         showBoardModal();
