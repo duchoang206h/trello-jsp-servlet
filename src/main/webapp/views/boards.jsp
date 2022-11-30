@@ -69,6 +69,10 @@
 <%-- Modal --%>
 <div class="modal js-modal">
     <div class="modal-container js-modal-container">
+        <div class="modal-close js-modal-close">
+            <i>X</i>
+        </div>
+
         <div class="modal-header">
             <p class="modal-heading">
                 Create a board

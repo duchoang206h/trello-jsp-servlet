@@ -143,16 +143,19 @@ a {
     align-items: center;
 }
 
+.nav-logo.index-page {
+    padding-left: 20px;
+}
+
 .trello-logo {
     height: 32px;
-    margin-left: 50px;
 }
 
 .nav-right-container {
     width: 200px;
     margin-right: 35px;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
 }
 
 .btn {
@@ -162,6 +165,10 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.btn+.btn {
+    margin-left: 10px;
 }
 
 .btn:hover {
