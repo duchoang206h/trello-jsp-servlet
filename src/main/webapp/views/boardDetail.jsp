@@ -109,7 +109,7 @@
     <div data-index="<%=board.getId()%>" class="list">
         <h3 class="list-title" data-index="<%=list.getId()%>"><%= list.getName()%></h3>
     <%
-    if(list.getCards() != null) { %>
+    if(list.getCards().size() != 0) { %>
         <ul data-index="<%=list.getId()%>" class="list-items">
         <%for(CardModel card: list.getCards()){ %>
             <li data-index="<%=card.getId()%>" class="list-item"><%= card.getDescription()%></li> <% } %>
@@ -198,13 +198,8 @@
             <textarea class="input-edit-card" name="description" id="edit-card" rows="4"></textarea>
 
             <div class="card-btn-container">
-                <input type="submit" class="btn update-btn" value="update">
-                    Update
-                </input>
-
-                <input type="submit" class="btn delete-btn" value="delete">
-                    Delete
-                </input>
+                <input type="submit" onclick="submitCard('update')" class="btn update-btn" value="update"/>
+                <input type="submit" onclick="submitCard('delete')" class="btn delete-btn" value="delete"/>
             </div>
         </form >
     </div>

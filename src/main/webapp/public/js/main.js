@@ -130,28 +130,34 @@ boardEditBtns.forEach((editBtn, index) => {
     });
 
 });
-document.getElementById("form-edit-card").addEventListener("submit", async (event) => {
-    try {
-        event.preventDefault();
-        console.log(event);
-        // const type = update or delete;
-        // const boardId =
-        // const listId =
-        // const cardId =
-        // const description =
-       /* if(type == "update"){
-            await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
-               boardId,
-               listId,
-               cardId,
-               description
-            })
-        }else{
-            await axios.delete(`/boards/${boardId}/lists/${listId}/cards/${cardId}`)
-        }*/
 
-        location.reload();
-    }catch (e) {
-        location.reload();
-    }
-})
+// Submit card
+function submitCard(type) {
+    const formEditCard = document.getElementById("form-edit-card");
+    console.log(formEditCard)
+    formEditCard.addEventListener("submit", async (event) => {
+        try {
+            event.preventDefault();
+            console.log(event);
+            // const type = "update" or "delete";
+            const boardId = formEditCard["0"].value;
+            const listId = formEditCard["1"].value
+            const cardId = formEditCard["2"].value
+            const description = formEditCard["3"].value
+            if(type == "update"){
+                 await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
+                    boardId,
+                    listId,
+                    cardId,
+                    description
+                 })
+             }else{
+                 await axios.delete(`/boards/${boardId}/lists/${listId}/cards/${cardId}`)
+             }
+
+            location.reload();
+        }catch (e) {
+            location.reload();
+        }
+    })
+}
