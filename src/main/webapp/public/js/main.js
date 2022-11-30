@@ -140,10 +140,11 @@ function submitCard(type) {
             event.preventDefault();
             console.log(event);
             // const type = "update" or "delete";
-            const boardId = formEditCard["0"].value;
+            const cardId = formEditCard["0"].value
             const listId = formEditCard["1"].value
-            const cardId = formEditCard["2"].value
+            const boardId = formEditCard["2"].value;
             const description = formEditCard["3"].value
+            console.log(boardId, listId, cardId, description)
             if(type == "update"){
                  await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
                     boardId,
