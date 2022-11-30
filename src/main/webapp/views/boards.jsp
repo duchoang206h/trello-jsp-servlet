@@ -1,4 +1,4 @@
-<%@ page import="dao.BoardDAO" %>
+
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="models.BoardModel" %><%--
   Created by IntelliJ IDEA.
@@ -11,9 +11,8 @@
 <button class="btn create-board-btn" onclick="showModal()">+ Creat a board</button>
 <div class="row">
     <%
-        BoardDAO boardDAO = new BoardDAO();
-        System.out.println((int)session.getAttribute("userId"));
-        ArrayList<BoardModel> boards = boardDAO.findAllByUserId((int)session.getAttribute("userId"));
+
+        ArrayList<BoardModel> boards = (ArrayList<BoardModel>) request.getAttribute("boards");
         if (boards.size() != 0) for(BoardModel board: boards){
     %>
     <a href="boards/<%= board.getId() %>" class="board-container">

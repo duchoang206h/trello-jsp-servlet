@@ -11,6 +11,7 @@ import models.CardModel;
 import models.ListModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @WebServlet(name = "BoardsServlet", urlPatterns = { "/boards", "/boards/*"})
@@ -27,17 +28,30 @@ public class BoardsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
-        System.out.println(pathInfo);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("isAuthenticated") == null) response.sendRedirect("/login");
         if(pathInfo == null){
             request.setAttribute("VIEW", "views/boards.jsp");
+            ArrayList<BoardModel> boards = boardDAO.findAllByUserId((int)session.getAttribute("userId"));
+            request.setAttribute("boards", boards);
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
             rd.forward(request, response);
         }else{
             int boardId = Integer.parseInt(pathInfo.replace("/", ""));
-            HttpSession session = request.getSession();
-            session.setAttribute("boardId", boardId);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
-            rd.forward(request, response);
+            BoardModel board = boardDAO.findOneById(boardId);
+            board.setLists(listDAO.findByBoardId(board.getId()));
+            for(ListModel list : board.getLists()){
+                list.setCards(cardDAO.findByListIdAndBoardId(list.getId(), board.getId()));
+            }
+            if(board == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("/views/pageNotFound.jsp");
+                rd.forward(request, response);
+            }else{
+                request.setAttribute("board", board);
+                RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
+                rd.forward(request, response);
+            }
+
         }
     }
 

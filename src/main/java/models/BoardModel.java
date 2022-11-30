@@ -1,9 +1,12 @@
 package models;
 
+import java.util.ArrayList;
+
 public class BoardModel {
     private int id;
     private int ownerId;
     private String name;
+    private ArrayList<ListModel> lists;
     public BoardModel(int ownerId, String name){
         this.ownerId = ownerId;
         this.name = name;
@@ -28,6 +31,14 @@ public class BoardModel {
 
     public int getId() {
         return id;
+    }
+
+    public ArrayList<ListModel> getLists() {
+        return lists;
+    }
+
+    public void setLists(ArrayList<ListModel> lists) {
+        this.lists = lists;
     }
 
     public int getOwnerId() {

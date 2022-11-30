@@ -102,21 +102,16 @@
 <section class="lists-container">
 
     <%
-        BoardDAO boardDAO = new BoardDAO();
-        ListDAO listDAO = new ListDAO();
-        CardDAO cardDAO = new CardDAO();
-        BoardModel board  = boardDAO.findOneById((int)session.getAttribute("boardId"));
-        System.out.println((int)session.getAttribute("boardId"));
-        ArrayList<ListModel> lists = listDAO.findByBoardId(board.getId());
-        if(lists != null) for(ListModel list: lists){
+        BoardModel board  = (BoardModel) request.getAttribute("board");
+
+        if(board.getLists() != null) for(ListModel list: board.getLists()){
     %>
     <div data-index="<%=board.getId()%>" class="list">
         <h3 class="list-title" data-index="<%=list.getId()%>"><%= list.getName()%></h3>
     <%
-    ArrayList<CardModel> cards = cardDAO.findByListIdAndBoardId(list.getId(), board.getId());
-    if(cards != null) { %>
+    if(list.getCards() != null) { %>
         <ul data-index="<%=list.getId()%>" class="list-items">
-        <%for(CardModel card: cards){ %>
+        <%for(CardModel card: list.getCards()){ %>
             <li data-index="<%=card.getId()%>" class="list-item"><%= card.getDescription()%></li> <% } %>
         </ul>
         <% } %>

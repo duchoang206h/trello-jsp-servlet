@@ -28,9 +28,6 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("isAuthenticated", true);
                 session.setAttribute("userId", user.getId());
-                Cookie loginCookie = new Cookie("email",email);
-                loginCookie.setMaxAge(30*60);
-                response.addCookie(loginCookie);
                 response.sendRedirect("/home");
             }else{
                 RequestDispatcher rd = getServletContext()
