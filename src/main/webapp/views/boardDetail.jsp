@@ -44,56 +44,30 @@
 
     </div>
 
-    <div class="logo">
 
-        <h1><i class="fab fa-trello logo-icon" aria-hidden="true"></i>Trello</h1>
-
-    </div>
-
-    <div class="user-settings">
-
-        <button class="user-settings-btn btn" aria-label="Create">
-            <i class="fas fa-plus" aria-hidden="true"></i>
-        </button>
-
-        <button class="user-settings-btn btn" aria-label="Information">
-            <i class="fas fa-info-circle" aria-hidden="true"></i>
-        </button>
-
-        <button class="user-settings-btn btn" aria-label="Notifications">
-            <i class="fas fa-bell" aria-hidden="true"></i>
-        </button>
-
-        <button class="user-settings-btn btn" aria-label="User Settings">
-            <i class="fas fa-user-circle" aria-hidden="true"></i>
-        </button>
-
-    </div>
 
 </header>
 <!-- End of masthead -->
 
-
+    <%
+        BoardModel board  = (BoardModel) request.getAttribute("board");
+    %>
 <!-- Board info bar -->
 <section class="board-info-bar">
 
     <div class="board-controls">
 
         <button class="board-title btn">
-            <h2>Web Development</h2>
+            <h2><%= board.getName()%></h2>
         </button>
 
         <button class="star-btn btn" aria-label="Star Board">
-            <i class="far fa-star" aria-hidden="true"></i>
+            <i class="fa-solid fa-plus"></i>
         </button>
 
-        <button class="personal-btn btn">Personal</button>
-
-        <button class="private-btn btn"><i class="fas fa-briefcase private-btn-icon" aria-hidden="true"></i>Private</button>
 
     </div>
 
-    <button class="menu-btn btn"><i class="fas fa-ellipsis-h menu-btn-icon" aria-hidden="true"></i>Show Menu</button>
 
 </section>
 <!-- End of board info bar -->
@@ -101,9 +75,8 @@
 <!-- Lists container -->
 <section class="lists-container">
 
-    <%
-        BoardModel board  = (BoardModel) request.getAttribute("board");
 
+    <%
         if(board.getLists() != null) for(ListModel list: board.getLists()){
     %>
     <div data-index="<%=board.getId()%>" class="list">

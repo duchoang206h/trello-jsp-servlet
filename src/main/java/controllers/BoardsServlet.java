@@ -31,9 +31,17 @@ public class BoardsServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if(session.getAttribute("isAuthenticated") == null) response.sendRedirect("/login");
         if(pathInfo == null){
+            int page = Integer.parseInt(request.getParameter("page") == null ? "1": request.getParameter("page"));
+            page = page <= 0 ? 1: page;
+            System.out.println(page)    ;
+            int userId = (int)session.getAttribute("userId");
+            System.out.println("userId"+ userId);
+            ArrayList<BoardModel> boards = boardDAO.findAllByUserId(userId);
+            ArrayList<BoardModel> paginateBoards = boardDAO.findByUserIdLimitAndOffset(userId, 9, (page - 1)*9);
+            System.out.println("totalPage" + paginateBoards.size());
+            request.setAttribute("totalPage", boards.size()/9);
+            request.setAttribute("boards", paginateBoards);
             request.setAttribute("VIEW", "views/boards.jsp");
-            ArrayList<BoardModel> boards = boardDAO.findAllByUserId((int)session.getAttribute("userId"));
-            request.setAttribute("boards", boards);
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
             rd.forward(request, response);
         }else{
@@ -62,6 +70,7 @@ public class BoardsServlet extends HttpServlet {
                 String pathInfo = request.getPathInfo();
                 System.out.println(pathInfo);
                 if(session.getAttribute("isAuthenticated") == null){
+                    System.out.println("unauthorized");
                     response.sendError(401, "unauthorized");
                 }else{
                     //create board
