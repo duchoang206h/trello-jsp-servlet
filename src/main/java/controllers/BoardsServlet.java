@@ -11,6 +11,7 @@ import models.CardModel;
 import models.ListModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 @WebServlet(name = "BoardsServlet", urlPatterns = { "/boards", "/boards/*"})
@@ -22,22 +23,35 @@ public class BoardsServlet extends HttpServlet {
     private String boardDetailRegex = "^/\\d$";
     private String listsRegex = "^/\\d/lists$";
     private String listDetailRegex = "^/\\d/lists/\\d$";
-    private String cardsRegex = "^/\\d/lists/\\d$/cards";
-    private String cardsDetaillRegex = "^/\\d/lists/\\d/cards/\\d$";
+    private String cardsRegex = "^/\\d/lists/\\d/cards$";
+    private String cardDetailRegex = "^/\\d/lists/\\d/cards/\\d$";
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
-        System.out.println(pathInfo);
+        HttpSession session = request.getSession();
+        if(session.getAttribute("isAuthenticated") == null) response.sendRedirect("/login");
         if(pathInfo == null){
             request.setAttribute("VIEW", "views/boards.jsp");
+            ArrayList<BoardModel> boards = boardDAO.findAllByUserId((int)session.getAttribute("userId"));
+            request.setAttribute("boards", boards);
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
             rd.forward(request, response);
         }else{
             int boardId = Integer.parseInt(pathInfo.replace("/", ""));
-            HttpSession session = request.getSession();
-            session.setAttribute("boardId", boardId);
-            RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
-            rd.forward(request, response);
+            BoardModel board = boardDAO.findOneById(boardId);
+            board.setLists(listDAO.findByBoardId(board.getId()));
+            for(ListModel list : board.getLists()){
+                list.setCards(cardDAO.findByListIdAndBoardId(list.getId(), board.getId()));
+            }
+            if(board == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("/views/pageNotFound.jsp");
+                rd.forward(request, response);
+            }else{
+                request.setAttribute("board", board);
+                RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
+                rd.forward(request, response);
+            }
+
         }
     }
 
@@ -52,6 +66,8 @@ public class BoardsServlet extends HttpServlet {
                 }else{
                     //create board
                     if(pathInfo == null){
+                        System.out.println("creat board");
+
                         String name = request.getParameter("name");
                         int userId = (int)session.getAttribute("userId");
                         BoardModel board = new BoardModel(userId, name);
@@ -61,12 +77,14 @@ public class BoardsServlet extends HttpServlet {
                     }
                     //create list
                     if(Pattern.matches(this.listsRegex, pathInfo)){
+                        System.out.println("creat list");
+
                         int boardId = Integer.parseInt(request.getParameter("boardId"));
                         String listName = request.getParameter("name");
                         System.out.println("listName" + listName);
                         System.out.println("boardId" + boardId);
                         int order = listDAO.getLatestOrder(boardId);
-                        ListModel list = new ListModel(listName, boardId, order);
+                        ListModel list = new ListModel(listName, boardId, order + 1 );
                         listDAO.create(list);
                         System.out.println("/boards/" + boardId);
                        response.sendRedirect("/boards/"+ boardId);
@@ -74,12 +92,16 @@ public class BoardsServlet extends HttpServlet {
                     }
                     // creat card
                     if(Pattern.matches(this.cardsRegex, pathInfo)){
+                        System.out.println("creat card");
+                        System.out.println("boardId" + request.getParameter("boardId"));
+                        System.out.println("listId" + request.getParameter("listId"));
+
                         int boardId = Integer.parseInt(request.getParameter("boardId"));
                         int listId = Integer.parseInt(request.getParameter("listId"));
                         String cardDescription = request.getParameter("description");
 
                         int order = cardDAO.findLatestOrderByBoardIdAndListId(boardId, listId);
-                        CardModel card = new CardModel(boardId, listId, cardDescription, order);
+                        CardModel card = new CardModel(boardId, listId, cardDescription, order + 1 );
                         cardDAO.create(card);
                         response.sendRedirect("/boards/"+ boardId);
                         return;
@@ -99,25 +121,42 @@ public class BoardsServlet extends HttpServlet {
             String pathInfo = request.getPathInfo();
             if(session.getAttribute("isAuthenticated") == null){
                 response.sendError(401, "unauthorized");
-            }else{
+                //update board
                 if(Pattern.matches(this.boardDetailRegex, pathInfo)){
-                    String name = request.getParameter("name");
-                    int userId = (int)session.getAttribute("userId");
-
-                    RequestDispatcher rd = getServletContext()
-                            .getRequestDispatcher(pathInfo);
-                    rd.forward(request, response);
-                }
-                if(Pattern.matches(this.listsRegex, pathInfo)){
+                    System.out.println("update board");
                     int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    String listName = request.getParameter("name");
-                    int order = listDAO.getLatestOrder(boardId);
-                    ListModel list = new ListModel(listName, boardId, order);
-                    listDAO.create(list);
-                    RequestDispatcher rd = getServletContext()
-                            .getRequestDispatcher(pathInfo);
-                    rd.forward(request, response);
+                    String boardName = request.getParameter("name");
+                    boardDAO.updateName(boardName, boardId);
+                    response.sendRedirect("/boards/"+ boardId);
+                    return;
                 }
+                // update list
+                if(Pattern.matches(this.listDetailRegex, pathInfo)){
+                    System.out.println("update list");
+                    System.out.println("boardId" + request.getParameter("boardId"));
+                    System.out.println("listId" + request.getParameter("listId"));
+
+                    int boardId = Integer.parseInt(request.getParameter("boardId"));
+                    int listId = Integer.parseInt(request.getParameter("listId"));
+                    String listName = request.getParameter("name");
+                    listDAO.updateListName(boardId, listId, listName);
+                    response.sendRedirect("/boards/"+ boardId);
+                    return;
+                }
+                if(Pattern.matches(this.cardDetailRegex, pathInfo)){
+                    System.out.println("update card");
+                    System.out.println("boardId" + request.getParameter("boardId"));
+                    System.out.println("listId" + request.getParameter("listId"));
+
+                    int boardId = Integer.parseInt(request.getParameter("boardId"));
+                    int listId = Integer.parseInt(request.getParameter("listId"));
+                    int cardId =  Integer.parseInt(request.getParameter("id"));
+                    String description = request.getParameter("description");
+                    cardDAO.updateCardDescription(boardId, listId, cardId, description);
+                    response.sendRedirect("/boards/"+ boardId);
+                    return;
+                }
+
             }
         }catch (Exception e){
 

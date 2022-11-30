@@ -1,10 +1,13 @@
 package models;
 
+import java.util.ArrayList;
+
 public class ListModel {
     private int id;
     private String name;
     private int order;
     private int boardId;
+    private ArrayList<CardModel> cards;
     public ListModel(){}
     public ListModel(String name, int boardId, int order){
         this.name = name;
@@ -25,6 +28,14 @@ public class ListModel {
 
     public int getOrder() {
         return order;
+    }
+
+    public ArrayList<CardModel> getCards() {
+        return cards;
+    }
+
+    public void setCards(ArrayList<CardModel> cards) {
+        this.cards = cards;
     }
 
     public void setName(String name) {

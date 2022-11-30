@@ -94,6 +94,21 @@ public class CardDAO {
             return 0;
         }
     }
+    public  boolean updateCardDescription(int boardId, int listId, int cardId, String description){
+        try {
+            String sql = "update cards set description = ? where id = ? and boardId = ? and listId = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, description);
+            ps.setInt(2, boardId);
+            ps.setInt(3, listId);
+            ps.executeQuery();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 
 
 }

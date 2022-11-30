@@ -19,6 +19,7 @@
 <%--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">--%>
     <link rel="stylesheet" href="../public/css/boardStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js" integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
 
@@ -101,32 +102,29 @@
 <section class="lists-container">
 
     <%
-        BoardDAO boardDAO = new BoardDAO();
-        ListDAO listDAO = new ListDAO();
-        CardDAO cardDAO = new CardDAO();
-        BoardModel board  = boardDAO.findOneById((int)session.getAttribute("boardId"));
-        System.out.println((int)session.getAttribute("boardId"));
-        ArrayList<ListModel> lists = listDAO.findByBoardId(board.getId());
-        if(lists != null) for(ListModel list: lists){
+        BoardModel board  = (BoardModel) request.getAttribute("board");
+
+        if(board.getLists() != null) for(ListModel list: board.getLists()){
     %>
     <div data-index="<%=board.getId()%>" class="list">
         <h3 class="list-title" data-index="<%=list.getId()%>"><%= list.getName()%></h3>
     <%
-    ArrayList<CardModel> cards = cardDAO.findByListIdAndBoardId(list.getId(), board.getId());
-    if(cards != null) { %>
+    if(list.getCards() != null) { %>
         <ul data-index="<%=list.getId()%>" class="list-items">
-        <%for(CardModel card: cards){ %>
+        <%for(CardModel card: list.getCards()){ %>
             <li data-index="<%=card.getId()%>" class="list-item"><%= card.getDescription()%></li> <% } %>
         </ul>
         <% } %>
 
-        <form action="" method="post" class="form-add-card">
-            <textarea rows="2" class="input-add-card" name="input-card"></textarea>
+        <form action="<%= "/boards/" + board.getId() + "/lists/" + list.getId() +  "/cards"%>"  method="post" class="form-add-card">
+            <textarea rows="2" class="input-add-card" name="description"></textarea>
+            <input type="text" value="<%=list.getId()%>"  name="listId" style="display:none;">
+            <input type="text" value="<%=board.getId()%>"  name="boardId" style="display:none;">
             <button type="button" class="add-card-btn btn">Add a card</button>
         </form>
     </div>
-    <% } %>
-
+    <% }
+    %>
     <button class="add-list-btn btn" onclick="showModal()">Add a list</button>
 
 </section>
@@ -145,10 +143,10 @@
             </p>
         </div>
 
-        <form action="" method="post" id="form-add-list" class="modal-body">
+        <form action="<%= "/boards/" + board.getId() + "/lists"%>"  method="post" id="form-add-list" class="modal-body">
 
-            <input type="text" placeholder="Title" class="modal-input" id="quantity-tickets">
-
+            <input type="text" placeholder="Title" class="modal-input" id="quantity-tickets" name="name">
+            <input type="text" name="boardId" value="<%=board.getId()%>" style="display:none;">
             <button class="create-btn">
                 Add
             </button>
@@ -192,26 +190,26 @@
             <i>X</i>
         </div>
 
-        <form action="" method="post" id="form-edit-card" class="modal-body">
-            <input type="text" name="card-id" id="card-id" class="card-id">
-            <input type="text" name="list-id" id="list-id" class="list-id">
-            <input type="text" name="board-id" id="board-id" class="board-id">
+        <form action="/boards/0/lists/0/cards/0" method="post" id="form-edit-card" class="modal-body">
+            <input type="text" name="id" id="card-id" class="card-id">
+            <input type="text" name="listId" id="list-id" class="list-id">
+            <input type="text" name="boardId" id="board-id" class="board-id">
             <label class="label-edit-card" for="edit-card">Card</label>
-            <textarea class="input-edit-card" name="card-content" id="edit-card" rows="4"></textarea>
+            <textarea class="input-edit-card" name="description" id="edit-card" rows="4"></textarea>
 
             <div class="card-btn-container">
-                <button class="btn update-btn">
+                <input type="submit" class="btn update-btn" value="update">
                     Update
-                </button>
+                </input>
 
-                <button type="button" class="btn delete-btn">
+                <input type="submit" class="btn delete-btn" value="delete">
                     Delete
-                </button>
+                </input>
             </div>
-        </form>
+        </form >
     </div>
 </div>
-
+<% %>
 <script src="../public/js/main.js"></script>
 </body>
 </html>

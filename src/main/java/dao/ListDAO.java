@@ -90,12 +90,28 @@ public class ListDAO {
     }
     public boolean updateOrder(int order, int listId) {
         try {
-            String sql = "update lists set order = ? where id = ?";
+            String sql = "update lists set `order` = ? where id = ?";
             Connection con = DBConnect.getConnection();
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, order);
             ps.setInt(2, listId);
+            ps.executeQuery();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean updateListName(int boardId, int listId, String name){
+        try {
+            String sql = "update lists set `name` = ? where id = ? and boardId = ?";
+            Connection con = DBConnect.getConnection();
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setInt(2, listId);
+            ps.setInt(3, boardId);
             ps.executeQuery();
             return true;
         }catch (Exception e){
