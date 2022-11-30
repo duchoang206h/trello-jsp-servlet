@@ -25,20 +25,22 @@ public class RegisterServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             UserModel user = new UserModel(name, email,password);
-            if(null != userDAO.findOneByEmail(email)){
+            System.out.println("email" + email);
+            UserModel existedUser = userDAO.findOneByEmail(email);
+            System.out.println("email" + existedUser.getEmail());
+            System.out.println("name" + existedUser.getName());
+            HttpSession session = request.getSession();
+            if(null == existedUser){
                 userDAO.create(user);
-                HttpSession session = request.getSession();
                 session.setAttribute("isAuthenticated", true);
                 response.sendRedirect("/home");
             }else {
                 error += "Email exist";
-                request.setAttribute("error", error);
-                RequestDispatcher rd = getServletContext()
-                        .getRequestDispatcher("views/register.jsp");
-                rd.forward(request, response);
+                session.setAttribute("loginError", error);
+                response.sendRedirect("/register");
             }
         }catch (Exception e){
-            response.sendRedirect("views/register.jsp");
+            response.sendRedirect("/register");
         }
     }
 }
