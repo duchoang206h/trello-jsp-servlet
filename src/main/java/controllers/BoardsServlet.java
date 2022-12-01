@@ -44,7 +44,7 @@ public class BoardsServlet extends HttpServlet {
             ArrayList<BoardModel> boards = boardDAO.findAllByUserId(userId);
             ArrayList<BoardModel> paginateBoards = boardDAO.findByUserIdLimitAndOffset(userId, 9, (page - 1)*9);
             System.out.println("totalPage" + paginateBoards.size());
-            request.setAttribute("totalPage", boards.size()/9);
+            request.setAttribute("totalPage", (boards.size()-1)/9+1);
             request.setAttribute("boards", paginateBoards);
             request.setAttribute("VIEW", "views/boards.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
@@ -150,7 +150,7 @@ public class BoardsServlet extends HttpServlet {
                     int boardId = Integer.parseInt((String) body.get("boardId"));
                     String boardName = (String) body.get("name");
                     boardDAO.updateName(boardName, boardId);
-                    response.sendRedirect("/boards/" + boardId);
+                    response.setStatus(200);
                     return;
                 }
                 // update list
@@ -163,25 +163,28 @@ public class BoardsServlet extends HttpServlet {
                     int listId = Integer.parseInt((String) body.get("listId"));
                     String listName = (String) body.get("name");
                     listDAO.updateListName(boardId, listId, listName);
-                    response.sendRedirect("/boards/" + boardId);
+                    response.setStatus(200);
                     return;
                 }
                 if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
                     System.out.println("update card");
-                    System.out.println("boardId" + request.getParameter("boardId"));
-                    System.out.println("listId" + request.getParameter("listId"));
 
-                    int boardId = Integer.parseInt((String) body.get("boardId"));
-                    int listId = Integer.parseInt((String) body.get("listId"));
-                    int cardId = Integer.parseInt((String) body.get("cardId"));
-                    String description = (String) body.get("description");
+                    int boardId = Integer.parseInt(body.get("boardId").toString());
+                    int listId = Integer.parseInt(body.get("listId").toString());
+                    int cardId = Integer.parseInt(body.get("cardId").toString());
+                    String description = body.get("description").toString();
                     cardDAO.updateCardDescription(boardId, listId, cardId, description);
-                    response.sendRedirect("/boards/" + boardId);
+                    System.out.println("boardId" + boardId);
+                    System.out.println("listId" + listId);
+                    System.out.println("cardId" + cardId);
+                    System.out.println("description" + description);
+                    response.setStatus(200);
                     return;
                 }
 
             }
         }catch (Exception e){
+            e.printStackTrace();
             response.sendError(500, "internal server error");
         }
     }

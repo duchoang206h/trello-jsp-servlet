@@ -32,7 +32,7 @@ public class ListDAO {
     public ArrayList<ListModel> findByBoardId (int boarId){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "select * from lists where boardId = ?";
+            String sql = "select * from lists where boardId = ? order by `order` asc ";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, boarId);
