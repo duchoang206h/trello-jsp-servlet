@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.BoardDAO;
 import dao.CardDAO;
 import dao.ListDAO;
@@ -10,8 +12,11 @@ import models.BoardModel;
 import models.CardModel;
 import models.ListModel;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 @WebServlet(name = "BoardsServlet", urlPatterns = { "/boards", "/boards/*"})
@@ -127,48 +132,57 @@ public class BoardsServlet extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
+            BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String data = br.readLine();
+
             String pathInfo = request.getPathInfo();
-            if(session.getAttribute("isAuthenticated") == null){
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> body = mapper.readValue(
+                    data, new TypeReference<Map<String, Object>>() {
+                    });
+
+            if(session.getAttribute("isAuthenticated") == null)
                 response.sendError(401, "unauthorized");
+            else {
                 //update board
-                if(Pattern.matches(this.boardDetailRegex, pathInfo)){
+                if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
                     System.out.println("update board");
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    String boardName = request.getParameter("name");
+                    int boardId = Integer.parseInt((String) body.get("boardId"));
+                    String boardName = (String) body.get("name");
                     boardDAO.updateName(boardName, boardId);
-                    response.sendRedirect("/boards/"+ boardId);
+                    response.sendRedirect("/boards/" + boardId);
                     return;
                 }
                 // update list
-                if(Pattern.matches(this.listDetailRegex, pathInfo)){
+                if (Pattern.matches(this.listDetailRegex, pathInfo)) {
                     System.out.println("update list");
                     System.out.println("boardId" + request.getParameter("boardId"));
                     System.out.println("listId" + request.getParameter("listId"));
 
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    int listId = Integer.parseInt(request.getParameter("listId"));
-                    String listName = request.getParameter("name");
+                    int boardId = Integer.parseInt((String) body.get("boardId"));
+                    int listId = Integer.parseInt((String) body.get("listId"));
+                    String listName = (String) body.get("name");
                     listDAO.updateListName(boardId, listId, listName);
-                    response.sendRedirect("/boards/"+ boardId);
+                    response.sendRedirect("/boards/" + boardId);
                     return;
                 }
-                if(Pattern.matches(this.cardDetailRegex, pathInfo)){
+                if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
                     System.out.println("update card");
                     System.out.println("boardId" + request.getParameter("boardId"));
                     System.out.println("listId" + request.getParameter("listId"));
 
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    int listId = Integer.parseInt(request.getParameter("listId"));
-                    int cardId =  Integer.parseInt(request.getParameter("id"));
-                    String description = request.getParameter("description");
+                    int boardId = Integer.parseInt((String) body.get("boardId"));
+                    int listId = Integer.parseInt((String) body.get("listId"));
+                    int cardId = Integer.parseInt((String) body.get("cardId"));
+                    String description = (String) body.get("description");
                     cardDAO.updateCardDescription(boardId, listId, cardId, description);
-                    response.sendRedirect("/boards/"+ boardId);
+                    response.sendRedirect("/boards/" + boardId);
                     return;
                 }
 
             }
         }catch (Exception e){
-
+            response.sendError(500, "internal server error");
         }
     }
 }

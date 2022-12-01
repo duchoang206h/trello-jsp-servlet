@@ -1,4 +1,5 @@
 // Ẩn hiện modal
+axios.withCredentials = true;
 const modals = document.querySelectorAll('.js-modal');
 const modal = document.querySelector('.modal');
 const cardModal = document.querySelector('.card-modal');
@@ -134,16 +135,21 @@ boardEditBtns.forEach((editBtn, index) => {
 // Submit card
 function submitCard(type) {
     const formEditCard = document.getElementById("form-edit-card");
-    console.log(formEditCard)
     formEditCard.addEventListener("submit", async (event) => {
         try {
             event.preventDefault();
             console.log(event);
-            // const type = "update" or "delete";
+            //const type = "update" or "delete";
             const boardId = formEditCard["0"].value;
             const listId = formEditCard["1"].value
             const cardId = formEditCard["2"].value
             const description = formEditCard["3"].value
+            console.log({
+                cardId,
+                description,
+                boardId,
+                listId
+            })
             if(type == "update"){
                  await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
                     boardId,
@@ -157,6 +163,7 @@ function submitCard(type) {
 
             location.reload();
         }catch (e) {
+            console.log(e)
             location.reload();
         }
     })
