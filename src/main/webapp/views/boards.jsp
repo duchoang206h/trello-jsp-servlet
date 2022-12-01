@@ -15,6 +15,7 @@
     <button class="btn btn-success btn-lg" onclick="showModal()">+ Create a board</button>
     <form class="d-flex" role="search" method="get" action="/boards">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
@@ -54,7 +55,9 @@
                     int totalPage = (int)request.getAttribute("totalPage");
                     if(totalPage> 5) totalPage = 5;
                     for(int i = 1; i<=totalPage; i++){ %>
+
                 <li class="page-item"><a onclick="handlePagePaginate(event, <%=i%>)" class="page-link" href="<%= "/boards?page=" + i%>"><%=i%></a></li>
+
                 <%}
                 %> <li class="page-item"><a class="page-link" href="">...</a></li> <%
             %>
@@ -67,6 +70,7 @@
             </ul>
         </nav>
     </div>
+
 <%--Modal--%>
 <div class="modal js-modal">
     <div class="modal-container js-modal-container">

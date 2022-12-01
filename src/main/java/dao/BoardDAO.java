@@ -61,9 +61,8 @@ public class BoardDAO {
                 board.setId(rs.getInt("id"));
                 board.setName(rs.getString("name"));
                 board.setOwnerId(rs.getInt("ownerId"));
-                return board;
             }
-            return null;
+            return board;
         }catch (Exception e){
             return null;
         }
@@ -167,4 +166,5 @@ public class BoardDAO {
             return null;
         }
     }
+
 }

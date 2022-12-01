@@ -112,21 +112,7 @@ public class ListDAO {
             ps.setString(1, name);
             ps.setInt(2, listId);
             ps.setInt(3, boardId);
-            ps.executeUpdate();
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-    public boolean deleteOneByBoardIdAndListId(int boardId, int listId){
-        try {
-            String sql = "delelte from lists where id = ? and boardId = ? limit 1";
-            Connection con = DBConnect.getConnection();
-            PreparedStatement ps;
-            ps = (PreparedStatement) con.prepareStatement(sql);
-            ps.setInt(1, listId);
-            ps.setInt(2, boardId);
-            ps.executeUpdate();
+            ps.executeQuery();
             return true;
         }catch (Exception e){
             return false;

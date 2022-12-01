@@ -168,6 +168,7 @@ function submitCard(type) {
         }
     })
 }
+
 function submitList(type){
     const formEditList = document.getElementById("form-edit-list");
     formEditList.addEventListener("submit", async (event) => {
@@ -232,3 +233,4 @@ function handleResetPassword(){
 
     }
 }
+
