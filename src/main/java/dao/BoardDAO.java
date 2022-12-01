@@ -61,9 +61,8 @@ public class BoardDAO {
                 board.setId(rs.getInt("id"));
                 board.setName(rs.getString("name"));
                 board.setOwnerId(rs.getInt("ownerId"));
-                return board;
             }
-            return null;
+            return board;
         }catch (Exception e){
             return null;
         }
@@ -103,21 +102,6 @@ public class BoardDAO {
             return boards;
         }catch (Exception e){
             return null;
-        }
-    }
-    public boolean deleteOneById(int id){
-        try {
-            Connection con = DBConnect.getConnection();
-            String sql = "delete from boards where boards.id = ? limit 1";
-            PreparedStatement ps;
-            ps = (PreparedStatement) con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            return true;
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return false;
         }
     }
 
