@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 session.setAttribute("isAuthenticated", true);
                 session.setAttribute("userId", user.getId());
+                session.setAttribute("user", user);
                 response.sendRedirect("/home");
             }else{
                 RequestDispatcher rd = getServletContext()

@@ -9,38 +9,42 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
     <div class="row">
-        <div class="col-4">
 
-        </div>
         <div class="col-8">
-            <% UserDAO userDAO = new UserDAO();
-                UserModel user = userDAO.findOneByEmail((String) session.getAttribute("email")); %>
-            <form action="" method="post">
-                <div class="mb-3">
-                    <label for="fullname" class="form-label">Full name</label>
+            <%
+                UserModel user = (UserModel) session.getAttribute("user"); %>
+                <form action="" method="post" id="form-update-profile">
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">Full name</label>
 
-                    <input type="text" name="fullname" id="fullname" class="form-control" value="<%=user.getName()%>">
+                        <input type="text" name="fullname" id="fullname" class="form-control" value="<%=user.getName()%>">
 
-                </div>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" id="email" class="form-control" value="<%=user.getEmail()%>">
-                </div>
-
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" value="<%=user.getEmail()%>">
+                    </div>
+                    <input type="submit"  onclick="handleUpdateProfile()" value="Update" class="btn btn-success" >
+                <form/>
+            <form>
                 <div class="password-container">
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="oldPassword" class="form-label">Old password</label>
-                        <input type="password" name="oldPassword" id="oldPassword" class="form-control">
+                        <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="type your old password">
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label for="newPassword" class="form-label">New password</label>
-                        <input type="password" name="newPassword" id="newPassword" class="form-control">
+                        <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="new password">
+                    </div>
+                    <div class="mb-2">
+                        <input type="password" name="confirmNewPassword" id="confirmNewPassword" class="form-control" placeholder="confirm new password">
                     </div>
                 </div>
-                <input type="submit" value="Update" class="btn btn-success">
+                <input type="submit" value="Reset password" class="btn btn-success">
             </form>
+
         </div>
     </div>
 </div>

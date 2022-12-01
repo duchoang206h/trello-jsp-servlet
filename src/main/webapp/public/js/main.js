@@ -200,3 +200,35 @@ function submitList(type){
         }
     })
 }
+function handlePagePaginate(event, index){
+    event.preventDefault();
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const search = params.search;
+    if(search){
+        window.location.href = `/boards?page=${index}&search=${search}`
+    }else{
+        window.location.href = `/boards?page=${index}`
+    }
+}
+function handleUpdateProfile(){
+    const formUpdate = document.getElementById("form-update-profile");
+    formUpdate.addEventListener("submit", async (event) => {
+        try {
+            event.preventDefault();
+            // const name
+            console.log(event)
+        }catch (e) {
+
+        }
+    })
+}
+function handleResetPassword(){
+    try {
+        // const oldPassword
+        // const newPassword
+    }catch (e) {
+
+    }
+}

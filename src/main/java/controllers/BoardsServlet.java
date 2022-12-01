@@ -40,16 +40,19 @@ public class BoardsServlet extends HttpServlet {
         String pathInfo = request.getPathInfo();
         HttpSession session = request.getSession();
         if(session.getAttribute("isAuthenticated") == null) response.sendRedirect("/login");
+        String search = request.getParameter("search");
         if(pathInfo == null){
             int page = Integer.parseInt(request.getParameter("page") == null ? "1": request.getParameter("page"));
             page = page <= 0 ? 1: page;
-            System.out.println(page)    ;
+            System.out.println("search" + search);
             int userId = (int)session.getAttribute("userId");
             System.out.println("userId"+ userId);
-            ArrayList<BoardModel> boards = boardDAO.findAllByUserId(userId);
-            ArrayList<BoardModel> paginateBoards = boardDAO.findByUserIdLimitAndOffset(userId, 9, (page - 1)*9);
-            System.out.println("totalPage" + paginateBoards.size());
-            request.setAttribute("totalPage", (boards.size()-1)/9+1);
+            ArrayList<BoardModel> boards = search != null && search!= ""? boardDAO.searchByName(search, userId):boardDAO.findAllByUserId(userId);
+            int totalPage = (boards.size()-1)/6+1;
+            int limit = 6;
+            int offset = (page - 1)*6;
+            ArrayList<BoardModel> paginateBoards = search != null && search!= ""? boardDAO.searchByNameLimitAndOffset(search, userId, limit, offset ):boardDAO.findByUserIdLimitAndOffset(userId, limit, offset );
+            request.setAttribute("totalPage", totalPage);
             request.setAttribute("boards", paginateBoards);
             request.setAttribute("VIEW", "views/boards.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
@@ -209,7 +212,7 @@ public class BoardsServlet extends HttpServlet {
                 if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
                         int boardId = idsFromPath.get(0);
                         if (boardDAO.deleteOneById(boardId)) response.setStatus(200);
-                        else response.setStatus(409);
+                        else response.setStatus(406);
                         return;
                 }
                 // update list
@@ -217,7 +220,7 @@ public class BoardsServlet extends HttpServlet {
                         int boardId = idsFromPath.get(0);
                         int listId = idsFromPath.get(1);
                         if (listDAO.deleteOneByBoardIdAndListId(boardId, listId)) response.setStatus(200);
-                        else response.setStatus(409);
+                        else response.setStatus(406);
                         return;
                 }
                 if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
@@ -226,7 +229,7 @@ public class BoardsServlet extends HttpServlet {
                         int listId = idsFromPath.get(1);
                         int cardId = idsFromPath.get(2);
                         if (cardDAO.deleteOne(boardId, listId, cardId)) response.setStatus(200);
-                        else response.setStatus(409);
+                        else response.setStatus(406);
                         return;
                 }
             }

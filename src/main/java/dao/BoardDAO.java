@@ -120,7 +120,51 @@ public class BoardDAO {
             return false;
         }
     }
-
-
-
+    public ArrayList<BoardModel> searchByName(String name, int userId){
+        try {
+            Connection con = DBConnect.getConnection();
+            String sql = "select * from boards where ownerId = ? and name like ?";
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setString(2, "%" + name + "%");
+            ResultSet rs = ps.executeQuery();
+            ArrayList<BoardModel> boards = new ArrayList<>();
+            while(rs.next()){
+                BoardModel board = new BoardModel();
+                board.setId(rs.getInt("id"));
+                board.setName(rs.getString("name"));
+                board.setOwnerId(rs.getInt("ownerId"));
+                boards.add(board);
+            }
+            return boards;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public ArrayList<BoardModel> searchByNameLimitAndOffset(String name, int userId, int limit, int offset){
+        try {
+            Connection con = DBConnect.getConnection();
+            String sql = "select * from boards where ownerId = ? and name like ? limit ? offset ?";
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, userId);
+            ps.setString(2, "%" + name + "%");
+            ps.setInt(3, limit);
+            ps.setInt(4, offset);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<BoardModel> boards = new ArrayList<>();
+            while(rs.next()){
+                BoardModel board = new BoardModel();
+                board.setId(rs.getInt("id"));
+                board.setName(rs.getString("name"));
+                board.setOwnerId(rs.getInt("ownerId"));
+                boards.add(board);
+            }
+            return boards;
+        }catch (Exception e){
+            return null;
+        }
+    }
 }
