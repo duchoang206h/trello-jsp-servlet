@@ -111,6 +111,23 @@ public class CardDAO {
             return false;
         }
     }
+    public boolean deleteOne(int boardId, int listId, int cardId){
+        try {
+            Connection con = DBConnect.getConnection();
+            String sql = "delete from cards where boardId = ? and listId = ? and id = ? limit 1";
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, boardId);
+            ps.setInt(2, listId);
+            ps.setInt(3, cardId);
+            ps.executeUpdate();
+            return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 }

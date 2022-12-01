@@ -168,3 +168,35 @@ function submitCard(type) {
         }
     })
 }
+function submitList(type){
+    const formEditList = document.getElementById("form-edit-list");
+    formEditList.addEventListener("submit", async (event) => {
+        try {
+            event.preventDefault();
+            console.log(event);
+            //const type = "update" or "delete";
+            const boardId = formEditList["1"].value;
+            const listId = formEditList["0"].value
+            const name = formEditList["2"].value
+            console.log({
+                name,
+                boardId,
+                listId
+            })
+            if(type == "update"){
+                await axios.put(`/boards/${boardId}/lists/${listId}`, {
+                    boardId,
+                    listId,
+                    name
+                })
+            }else{
+                await axios.delete(`/boards/${boardId}/lists/${listId}`, { boardId, listId})
+            }
+
+            location.reload();
+        }catch (e) {
+            console.log(e)
+            location.reload();
+        }
+    })
+}
