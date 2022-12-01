@@ -34,7 +34,7 @@ public class CardDAO {
     public ArrayList<CardModel> findByListIdAndBoardId (int listId, int boarId){
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "select * from cards where listId = ? and boardId = ? order by cards.order DESC ";
+            String sql = "select * from cards where listId = ? and boardId = ? order by cards.order asc ";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, listId);
@@ -96,16 +96,35 @@ public class CardDAO {
     }
     public  boolean updateCardDescription(int boardId, int listId, int cardId, String description){
         try {
-            String sql = "update cards set description = ? where id = ? and boardId = ? and listId = ?";
             Connection con = DBConnect.getConnection();
+            String sql = "update cards set description = ? where id = ? and boardId = ? and listId = ?;";
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, description);
-            ps.setInt(2, boardId);
-            ps.setInt(3, listId);
-            ps.executeQuery();
+            ps.setInt(2, cardId);
+            ps.setInt(3, boardId);
+            ps.setInt(4, listId);
+            ps.executeUpdate();
             return true;
         }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean deleteOne(int boardId, int listId, int cardId){
+        try {
+            Connection con = DBConnect.getConnection();
+            String sql = "delete from cards where boardId = ? and listId = ? and id = ? limit 1";
+            PreparedStatement ps;
+            ps = (PreparedStatement) con.prepareStatement(sql);
+            ps.setInt(1, boardId);
+            ps.setInt(2, listId);
+            ps.setInt(3, cardId);
+            ps.executeUpdate();
+            return true;
+
+        }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }

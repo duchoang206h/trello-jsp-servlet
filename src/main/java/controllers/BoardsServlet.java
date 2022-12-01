@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.BoardDAO;
 import dao.CardDAO;
 import dao.ListDAO;
@@ -9,9 +11,14 @@ import jakarta.servlet.annotation.*;
 import models.BoardModel;
 import models.CardModel;
 import models.ListModel;
+import utils.Util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @WebServlet(name = "BoardsServlet", urlPatterns = { "/boards", "/boards/*"})
@@ -19,12 +26,15 @@ public class BoardsServlet extends HttpServlet {
     BoardDAO boardDAO = new BoardDAO();
     ListDAO listDAO = new ListDAO();
     CardDAO cardDAO = new CardDAO();
+
+    Util util = new Util();
    // private String boardsRegex = "^/boards$";
     private String boardDetailRegex = "^/\\d$";
     private String listsRegex = "^/\\d/lists$";
     private String listDetailRegex = "^/\\d/lists/\\d$";
     private String cardsRegex = "^/\\d/lists/\\d/cards$";
     private String cardDetailRegex = "^/\\d/lists/\\d/cards/\\d$";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pathInfo = request.getPathInfo();
@@ -39,7 +49,7 @@ public class BoardsServlet extends HttpServlet {
             ArrayList<BoardModel> boards = boardDAO.findAllByUserId(userId);
             ArrayList<BoardModel> paginateBoards = boardDAO.findByUserIdLimitAndOffset(userId, 9, (page - 1)*9);
             System.out.println("totalPage" + paginateBoards.size());
-            request.setAttribute("totalPage", boards.size()/9);
+            request.setAttribute("totalPage", (boards.size()-1)/9+1);
             request.setAttribute("boards", paginateBoards);
             request.setAttribute("VIEW", "views/boards.jsp");
             RequestDispatcher rd = request.getRequestDispatcher("/layout.jsp");
@@ -47,19 +57,19 @@ public class BoardsServlet extends HttpServlet {
         }else{
             int boardId = Integer.parseInt(pathInfo.replace("/", ""));
             BoardModel board = boardDAO.findOneById(boardId);
+            if(board == null) {
+                RequestDispatcher rd = request.getRequestDispatcher("/views/pageNotFound.jsp");
+                rd.forward(request, response);
+                return;
+            }
             board.setLists(listDAO.findByBoardId(board.getId()));
             for(ListModel list : board.getLists()){
                 list.setCards(cardDAO.findByListIdAndBoardId(list.getId(), board.getId()));
             }
-            if(board == null) {
-                RequestDispatcher rd = request.getRequestDispatcher("/views/pageNotFound.jsp");
-                rd.forward(request, response);
-            }else{
-                request.setAttribute("board", board);
-                RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
-                rd.forward(request, response);
-            }
 
+            request.setAttribute("board", board);
+            RequestDispatcher rd = request.getRequestDispatcher("/views/boardDetail.jsp");
+            rd.forward(request, response);
         }
     }
 
@@ -127,48 +137,102 @@ public class BoardsServlet extends HttpServlet {
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
+            BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+            String data = br.readLine();
+
             String pathInfo = request.getPathInfo();
-            if(session.getAttribute("isAuthenticated") == null){
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> body = mapper.readValue(
+                    data, new TypeReference<Map<String, Object>>() {
+                    });
+
+            if(session.getAttribute("isAuthenticated") == null)
                 response.sendError(401, "unauthorized");
+            else {
                 //update board
-                if(Pattern.matches(this.boardDetailRegex, pathInfo)){
+                if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
                     System.out.println("update board");
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    String boardName = request.getParameter("name");
+                    int boardId = Integer.parseInt((String) body.get("boardId"));
+                    String boardName = (String) body.get("name");
                     boardDAO.updateName(boardName, boardId);
-                    response.sendRedirect("/boards/"+ boardId);
+                    response.setStatus(200);
                     return;
                 }
                 // update list
-                if(Pattern.matches(this.listDetailRegex, pathInfo)){
+                if (Pattern.matches(this.listDetailRegex, pathInfo)) {
                     System.out.println("update list");
                     System.out.println("boardId" + request.getParameter("boardId"));
                     System.out.println("listId" + request.getParameter("listId"));
 
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    int listId = Integer.parseInt(request.getParameter("listId"));
-                    String listName = request.getParameter("name");
+                    int boardId = Integer.parseInt(body.get("boardId").toString());
+                    int listId = Integer.parseInt(body.get("listId").toString());
+                    String listName = body.get("name").toString();
                     listDAO.updateListName(boardId, listId, listName);
-                    response.sendRedirect("/boards/"+ boardId);
+                    response.setStatus(200);
                     return;
                 }
-                if(Pattern.matches(this.cardDetailRegex, pathInfo)){
+                if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
                     System.out.println("update card");
-                    System.out.println("boardId" + request.getParameter("boardId"));
-                    System.out.println("listId" + request.getParameter("listId"));
 
-                    int boardId = Integer.parseInt(request.getParameter("boardId"));
-                    int listId = Integer.parseInt(request.getParameter("listId"));
-                    int cardId =  Integer.parseInt(request.getParameter("id"));
-                    String description = request.getParameter("description");
+                    int boardId = Integer.parseInt(body.get("boardId").toString());
+                    int listId = Integer.parseInt(body.get("listId").toString());
+                    int cardId = Integer.parseInt(body.get("cardId").toString());
+                    String description = body.get("description").toString();
                     cardDAO.updateCardDescription(boardId, listId, cardId, description);
-                    response.sendRedirect("/boards/"+ boardId);
+                    System.out.println("boardId" + boardId);
+                    System.out.println("listId" + listId);
+                    System.out.println("cardId" + cardId);
+                    System.out.println("description" + description);
+                    response.setStatus(200);
                     return;
                 }
 
             }
         }catch (Exception e){
+            e.printStackTrace();
+            response.sendError(500, "internal server error");
+        }
+    }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession session = request.getSession();
+
+            String pathInfo = request.getPathInfo();
+            System.out.println(pathInfo);
+            if(session.getAttribute("isAuthenticated") == null)
+                response.sendError(401, "unauthorized");
+            else {
+                //update board
+                ArrayList<Integer> idsFromPath = util.getDigitsFromString(pathInfo);
+                if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
+                        int boardId = idsFromPath.get(0);
+                        if (boardDAO.deleteOneById(boardId)) response.setStatus(200);
+                        else response.setStatus(409);
+                        return;
+                }
+                // update list
+                if (Pattern.matches(this.listDetailRegex, pathInfo)) {
+                        int boardId = idsFromPath.get(0);
+                        int listId = idsFromPath.get(1);
+                        if (listDAO.deleteOneByBoardIdAndListId(boardId, listId)) response.setStatus(200);
+                        else response.setStatus(409);
+                        return;
+                }
+                if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
+
+                        int boardId = idsFromPath.get(0);
+                        int listId = idsFromPath.get(1);
+                        int cardId = idsFromPath.get(2);
+                        if (cardDAO.deleteOne(boardId, listId, cardId)) response.setStatus(200);
+                        else response.setStatus(409);
+                        return;
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            response.sendError(500, "internal server error");
         }
     }
 }

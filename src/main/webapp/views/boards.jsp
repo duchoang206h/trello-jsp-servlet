@@ -8,6 +8,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<button class="btn create-board-btn" onclick="showModal()">+ Creat a board</button>
+<div class="row">
+    <%
 
 <%-- Content--%>
 <div class="d-flex justify-content-between align-items-center m-2">
@@ -66,8 +69,7 @@
             </ul>
         </nav>
     </div>
-
-<%-- Modal --%>
+<%--Modal--%>
 <div class="modal js-modal">
     <div class="modal-container js-modal-container">
         <div class="modal-close js-modal-close">
@@ -91,9 +93,13 @@
     </div>
 </div>
 
-<%-- Card Modal--%>
+<%--  Card  Modal   --%>
 <div class="board-modal js-modal">
     <div class="board-modal-container js-modal-container">
+        <div class="modal-close js-modal-close">
+            <i>X</i>
+        </div>
+
         <form action="" method="post" id="form-edit-board" class="modal-body">
             <input type="text" name="board-id" id="board-id" class="board-id">
             <textarea class="input-edit-board" name="card-content" id="edit-board" rows="2"></textarea>
@@ -110,5 +116,7 @@
         </form>
     </div>
 </div>
+
+
 
 <script src="public/js/main.js"></script>
