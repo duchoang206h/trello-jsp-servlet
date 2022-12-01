@@ -143,19 +143,16 @@ a {
     align-items: center;
 }
 
-.nav-logo.index-page {
-    padding-left: 20px;
-}
-
 .trello-logo {
     height: 32px;
+    margin-left: 50px;
 }
 
 .nav-right-container {
     width: 200px;
     margin-right: 35px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
 }
 
 .btn {
@@ -165,10 +162,6 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.btn+.btn {
-    margin-left: 10px;
 }
 
 .btn:hover {
@@ -225,11 +218,6 @@ a {
     font-weight: 600;
 }
 
-.sidebar-nav-item i {
-    font-size: 20px;
-    margin-right: 10px;
-}
-
 a.sidebar-nav-item:hover {
     background-color: #b9e0f9;
 }
@@ -246,11 +234,6 @@ a.sidebar-nav-item:hover {
     border: 2px solid #f0f0f0;
     padding: 10px;
     margin: 0 20px 0 40px;
-}
-
-.content-header {
-    display: flex;
-    justify-content: space-between;
 }
 
 .image-center {
@@ -358,12 +341,10 @@ a.sidebar-nav-item:hover {
     font-size: 36px;
     color: #fff;
     letter-spacing: 4px;
-    margin-bottom: 30px;
 }
 
 .modal-heading {
-    margin: 0;
-    width: 100%;
+    margin: 0 0 36px 0;
 }
 
 .modal-close{

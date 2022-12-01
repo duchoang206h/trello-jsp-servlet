@@ -1,4 +1,5 @@
 // Ẩn hiện modal
+axios.withCredentials = true;
 const modals = document.querySelectorAll('.js-modal');
 const modal = document.querySelector('.modal');
 const cardModal = document.querySelector('.card-modal');
@@ -134,17 +135,21 @@ boardEditBtns.forEach((editBtn, index) => {
 // Submit card
 function submitCard(type) {
     const formEditCard = document.getElementById("form-edit-card");
-    console.log(formEditCard)
     formEditCard.addEventListener("submit", async (event) => {
         try {
             event.preventDefault();
             console.log(event);
-            // const type = "update" or "delete";
-            const cardId = formEditCard["0"].value
-            const listId = formEditCard["1"].value
+            //const type = "update" or "delete";
             const boardId = formEditCard["2"].value;
+            const listId = formEditCard["1"].value
+            const cardId = formEditCard["0"].value
             const description = formEditCard["3"].value
-            console.log(boardId, listId, cardId, description)
+            console.log({
+                cardId,
+                description,
+                boardId,
+                listId
+            })
             if(type == "update"){
                  await axios.put(`/boards/${boardId}/lists/${listId}/cards/${cardId}`, {
                     boardId,
@@ -158,6 +163,39 @@ function submitCard(type) {
 
             location.reload();
         }catch (e) {
+            console.log(e)
+            location.reload();
+        }
+    })
+}
+function submitList(type){
+    const formEditList = document.getElementById("form-edit-list");
+    formEditList.addEventListener("submit", async (event) => {
+        try {
+            event.preventDefault();
+            console.log(event);
+            //const type = "update" or "delete";
+            const boardId = formEditList["1"].value;
+            const listId = formEditList["0"].value
+            const name = formEditList["2"].value
+            console.log({
+                name,
+                boardId,
+                listId
+            })
+            if(type == "update"){
+                await axios.put(`/boards/${boardId}/lists/${listId}`, {
+                    boardId,
+                    listId,
+                    name
+                })
+            }else{
+                await axios.delete(`/boards/${boardId}/lists/${listId}`, { boardId, listId})
+            }
+
+            location.reload();
+        }catch (e) {
+            console.log(e)
             location.reload();
         }
     })

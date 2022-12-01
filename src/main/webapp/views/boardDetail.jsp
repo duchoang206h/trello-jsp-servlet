@@ -138,19 +138,19 @@
         </div>
 
         <form action="" method="post" id="form-edit-list" class="modal-body">
-            <input type="text" name="list-id" class="list-id">
-            <input type="text" name="board-id" class="board-id">
+            <input type="text" name="listId" class="list-id">
+            <input type="text" name="boardId" class="board-id">
             <label class="label-edit-card" for="edit-card">List</label>
-            <textarea class="input-edit-card" name="card-content" id="edit-list" rows="4"></textarea>
+            <textarea class="input-edit-card" name="name" id="edit-list" rows="4"></textarea>
 
             <div class="card-btn-container">
-                <button class="btn update-btn">
-                    Update
-                </button>
+                <input type="submit" class="btn update-btn" onclick="submitList('update')" value="update">
 
-                <button type="button" class="btn delete-btn">
-                    Delete
-                </button>
+                </input>
+
+                <input type="button" class="btn delete-btn" onclick="submitList('delete')" value="update">
+
+                </input>
             </div>
         </form>
     </div>

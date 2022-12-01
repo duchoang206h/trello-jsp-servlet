@@ -8,7 +8,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<button class="btn create-board-btn" onclick="showModal()">+ Creat a board</button>
+<div class="row">
+    <%
 <%-- Content--%>
 <div class="d-flex justify-content-between align-items-center m-2">
     <button class="btn btn-success btn-lg" onclick="showModal()">+ Create a board</button>
@@ -67,7 +69,7 @@
         </nav>
     </div>
 
-<%-- Modal --%>
+<%--Modal--%>
 <div class="modal js-modal">
     <div class="modal-container js-modal-container">
         <div class="modal-close js-modal-close">
@@ -91,9 +93,13 @@
     </div>
 </div>
 
-<%-- Card Modal--%>
+<%--  Card  Modal   --%>
 <div class="board-modal js-modal">
     <div class="board-modal-container js-modal-container">
+        <div class="modal-close js-modal-close">
+            <i>X</i>
+        </div>
+
         <form action="" method="post" id="form-edit-board" class="modal-body">
             <input type="text" name="board-id" id="board-id" class="board-id">
             <textarea class="input-edit-board" name="card-content" id="edit-board" rows="2"></textarea>
@@ -110,5 +116,31 @@
         </form>
     </div>
 </div>
+
+
+<nav aria-label="Page navigation example mt-3" >
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+            </a>
+        </li>
+        <%
+            int totalPage = (int)request.getAttribute("totalPage");
+            if(totalPage> 5) totalPage = 5;
+            for(int i = 1; i<=totalPage; i++){ %>
+             <li class="page-item"><a class="page-link" href="<%= "/boards?page=" + i%>"><%=i%></a></li>
+            <%}
+               %> <li class="page-item"><a class="page-link" href="">...</a></li> <%
+            %>
+        <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+            </a>
+        </li>
+    </ul>
+</nav>
 
 <script src="public/js/main.js"></script>

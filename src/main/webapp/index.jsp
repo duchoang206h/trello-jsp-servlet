@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="nav-bar">
-    <a href="home" class="nav-logo index-page">
+    <a href="home" class="nav-logo">
         <img alt="brand logo" class="trello-logo" src="https://trello-clone-one.vercel.app/trello-logo.svg">
     </a>
     <div class="nav-right-container">
