@@ -217,7 +217,8 @@ function handleUpdateProfile(){
     formUpdate.addEventListener("submit", async (event) => {
         try {
             event.preventDefault();
-            // const name
+            const name = formUpdate.getElementById("fullname").value
+            const email = formUpdate.getElementById("email").value
             console.log(event)
         }catch (e) {
 
@@ -225,9 +226,10 @@ function handleUpdateProfile(){
     })
 }
 function handleResetPassword(){
+    const formPassword = document.querySelector("password-container");
     try {
-        // const oldPassword
-        // const newPassword
+        const oldPassword = formPassword.getElementById("oldPassword").value;
+        const newPassword = formPassword.getElementById("newPassword").value;
     }catch (e) {
 
     }
