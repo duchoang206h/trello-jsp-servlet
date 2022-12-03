@@ -20,11 +20,11 @@ public class CardDAO {
             ps.setInt(2, card.getOrder());
             ps.setInt(3, card.getBoardId());
             ps.setInt(4, card.getListId());
-            ps.executeUpdate();
+            ps.execute();
             con.close();
             return true;
         }catch (Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return false;
         }
     }

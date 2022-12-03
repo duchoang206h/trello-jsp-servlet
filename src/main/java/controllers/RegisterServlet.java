@@ -30,6 +30,8 @@ public class RegisterServlet extends HttpServlet {
             if(null == existedUser){
                 userDAO.create(user);
                 session.setAttribute("isAuthenticated", true);
+                session.setAttribute("user", user);
+                session.setAttribute("userId", user.getId());
                 response.sendRedirect("/home");
             }else {
                 error += "Email exist";

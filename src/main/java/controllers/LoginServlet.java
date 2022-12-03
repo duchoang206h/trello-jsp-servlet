@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 
         }catch (Exception e){
             e.printStackTrace();
-           response.sendRedirect("/login");
+            response.sendRedirect("/login");
         }
 
     }

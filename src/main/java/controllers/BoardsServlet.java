@@ -29,11 +29,11 @@ public class BoardsServlet extends HttpServlet {
 
     Util util = new Util();
    // private String boardsRegex = "^/boards$";
-    private String boardDetailRegex = "^/\\d$";
-    private String listsRegex = "^/\\d/lists$";
-    private String listDetailRegex = "^/\\d/lists/\\d$";
-    private String cardsRegex = "^/\\d/lists/\\d/cards$";
-    private String cardDetailRegex = "^/\\d/lists/\\d/cards/\\d$";
+    private String boardDetailRegex = "^/\\d+$";
+    private String listsRegex = "^/\\d+/lists$";
+    private String listDetailRegex = "^/\\d+/lists/\\d+$";
+    private String cardsRegex = "^/\\d+/lists/\\d+/cards$";
+    private String cardDetailRegex = "^/\\d+/lists/\\d+/cards/\\d+$";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -98,8 +98,8 @@ public class BoardsServlet extends HttpServlet {
                         int order = listDAO.getLatestOrder(boardId);
                         ListModel list = new ListModel(listName, boardId, order + 1 );
                         listDAO.create(list);
-                       response.sendRedirect("/boards/"+ boardId);
-                       return;
+                        response.sendRedirect("/boards/"+ boardId);
+                        return;
                     }
                     // creat card
                     if(Pattern.matches(this.cardsRegex, pathInfo)){

@@ -18,11 +18,11 @@ public class ListDAO {
             ps.setString(1, list.getName());
             ps.setInt(2, list.getOrder());
             ps.setInt(3, list.getBoardId());
-            ps.executeUpdate();
+            ps.execute();
             con.close();
             return true;
         }catch (Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             return false;
         }
     }

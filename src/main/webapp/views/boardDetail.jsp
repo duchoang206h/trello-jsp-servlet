@@ -141,12 +141,7 @@
 
             <div class="card-btn-container">
                 <input type="submit" class="btn update-btn" onclick="submitList('update')" value="update">
-
-                </input>
-
-                <input type="button" class="btn delete-btn" onclick="submitList('delete')" value="update">
-
-                </input>
+                <input type="submit" class="btn delete-btn" onclick="submitList('delete')" value="update">
             </div>
         </form>
     </div>

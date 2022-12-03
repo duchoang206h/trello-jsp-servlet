@@ -16,7 +16,7 @@ public class BoardDAO {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, board.getName());
             ps.setInt(2, board.getOwnerId());
-            ps.executeUpdate();
+            ps.execute();
             con.close();
             return true;
         }catch (Exception e){
