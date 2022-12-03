@@ -212,25 +212,72 @@ function handlePagePaginate(event, index){
         window.location.href = `/boards?page=${index}`
     }
 }
-function handleUpdateProfile(){
-    const formUpdate = document.getElementById("form-update-profile");
-    formUpdate.addEventListener("submit", async (event) => {
-        try {
-            event.preventDefault();
-            const name = formUpdate.getElementById("fullname").value
-            const email = formUpdate.getElementById("email").value
-            console.log(event)
-        }catch (e) {
-
-        }
-    })
-}
-function handleResetPassword(){
-    const formPassword = document.querySelector("password-container");
+document.getElementById("form-update-profile")?.addEventListener("submit", async (event) => {
     try {
-        const oldPassword = formPassword.getElementById("oldPassword").value;
-        const newPassword = formPassword.getElementById("newPassword").value;
+        event.preventDefault();
+        const name = document.getElementById("fullname").value;
+        console.log(name)
+        await axios.put("/settings/profile", { name })
+        location.reload();
     }catch (e) {
-
+        location.reload();
+        console.log(e)
+    }
+})
+document.getElementById("form-reset-password")?.addEventListener("submit", async (event) => {
+    try {
+        event.preventDefault();
+        const oldPassword = document.getElementById("oldPassword").value
+        const newPassword = document.getElementById("newPassword").value
+        await axios.put("/settings/reset-password", { oldPassword, newPassword })
+        location.reload();
+    }catch (e) {
+        console.log(e)
+        if(e.response.status === 409) {
+            document.getElementById("passwordError").style.display = "block"
+            document.getElementById("passwordError").innerHTML= "invalid password";
+        }
+    }
+})
+function increasePage(event){
+    event.preventDefault();
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const search = params.search;
+    let page = params.page;
+    page = page? Number(page)+1: 1
+    if(search){
+        window.location.href = `/boards?page=${page}&search=${search}`
+    }else{
+        window.location.href = `/boards?page=${page}`
+    }
+}
+function decreasePage(event){
+    event.preventDefault();
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+    });
+    const search = params.search;
+    let page = params.page;
+    page = page? Number(page) - 1: 1
+    if(search){
+        window.location.href = `/boards?page=${page}&search=${search}`
+    }else{
+        window.location.href = `/boards?page=${page}`
+    }
+}
+async function handleEditBoard(event, type){
+    event.preventDefault();
+    const formEditBoard = document.getElementById("form-edit-board")
+    try {
+        const id = formEditBoard["0"].value
+        const name = formEditBoard["1"].value;
+        if(type === "update") await axios.put(`/boards/${id}`, { id, name})
+        else await axios.delete(`/boards/${id}`);
+        location.reload();
+    }   catch (e) {
+        location.reload();
+        console.log(e)
     }
 }

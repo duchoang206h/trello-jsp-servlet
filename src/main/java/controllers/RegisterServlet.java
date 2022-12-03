@@ -25,10 +25,7 @@ public class RegisterServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             UserModel user = new UserModel(name, email,password);
-            System.out.println("email" + email);
             UserModel existedUser = userDAO.findOneByEmail(email);
-            System.out.println("email" + existedUser.getEmail());
-            System.out.println("name" + existedUser.getName());
             HttpSession session = request.getSession();
             if(null == existedUser){
                 userDAO.create(user);

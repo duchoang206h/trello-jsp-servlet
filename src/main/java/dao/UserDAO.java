@@ -74,7 +74,7 @@ public class UserDAO {
                 if(user != null && BCrypt.checkpw(password, user.getPassword())) return user;
                 return null;
         }catch (Exception e){
-                System.out.print(e);
+                e.printStackTrace();
                 return null;
         }
     }
@@ -86,9 +86,10 @@ public class UserDAO {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, name);
             ps.setInt(2, userId);
-            ps.executeQuery();
+            ps.executeUpdate();
             return true;
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }
@@ -100,7 +101,7 @@ public class UserDAO {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setInt(2, userId);
-            ps.executeQuery();
+            ps.executeUpdate();
             return true;
         }catch (Exception e){
             return false;
@@ -114,7 +115,7 @@ public class UserDAO {
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setString(1, BCrypt.hashpw(password, BCrypt.gensalt(10)));
             ps.setInt(2, userId);
-            ps.executeQuery();
+            ps.executeUpdate();
             return true;
         }catch (Exception e){
             return false;

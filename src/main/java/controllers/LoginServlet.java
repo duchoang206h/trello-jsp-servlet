@@ -23,22 +23,23 @@ public class LoginServlet extends HttpServlet {
             String err = "";
             String email = request.getParameter("email");
             String password = request.getParameter("password");
+            HttpSession session = request.getSession();
             UserModel user = this.userDAO.validate(email, password);
             if(user !=null){
-                HttpSession session = request.getSession();
                 session.setAttribute("isAuthenticated", true);
                 session.setAttribute("userId", user.getId());
                 session.setAttribute("user", user);
                 response.sendRedirect("/home");
             }else{
-                RequestDispatcher rd = getServletContext()
-                        .getRequestDispatcher("/login");
-                rd.forward(request, response);
+                err+="invalid username or password";
+                System.out.println(err);
+                session.setAttribute("loginError", err);
+                response.sendRedirect("/login");
             }
 
         }catch (Exception e){
-           System.out.print(e);
-
+            e.printStackTrace();
+           response.sendRedirect("/login");
         }
 
     }

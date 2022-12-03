@@ -44,9 +44,7 @@ public class BoardsServlet extends HttpServlet {
         if(pathInfo == null){
             int page = Integer.parseInt(request.getParameter("page") == null ? "1": request.getParameter("page"));
             page = page <= 0 ? 1: page;
-            System.out.println("search" + search);
             int userId = (int)session.getAttribute("userId");
-            System.out.println("userId"+ userId);
             ArrayList<BoardModel> boards = search != null && search!= ""? boardDAO.searchByName(search, userId):boardDAO.findAllByUserId(userId);
             int totalPage = (boards.size()-1)/6+1;
             int limit = 6;
@@ -81,15 +79,11 @@ public class BoardsServlet extends HttpServlet {
         try {
                 HttpSession session = request.getSession();
                 String pathInfo = request.getPathInfo();
-                System.out.println(pathInfo);
                 if(session.getAttribute("isAuthenticated") == null){
-                    System.out.println("unauthorized");
                     response.sendError(401, "unauthorized");
                 }else{
                     //create board
                     if(pathInfo == null){
-                        System.out.println("creat board");
-
                         String name = request.getParameter("name");
                         int userId = (int)session.getAttribute("userId");
                         BoardModel board = new BoardModel(userId, name);
@@ -99,25 +93,16 @@ public class BoardsServlet extends HttpServlet {
                     }
                     //create list
                     if(Pattern.matches(this.listsRegex, pathInfo)){
-                        System.out.println("creat list");
-
                         int boardId = Integer.parseInt(request.getParameter("boardId"));
                         String listName = request.getParameter("name");
-                        System.out.println("listName" + listName);
-                        System.out.println("boardId" + boardId);
                         int order = listDAO.getLatestOrder(boardId);
                         ListModel list = new ListModel(listName, boardId, order + 1 );
                         listDAO.create(list);
-                        System.out.println("/boards/" + boardId);
                        response.sendRedirect("/boards/"+ boardId);
                        return;
                     }
                     // creat card
                     if(Pattern.matches(this.cardsRegex, pathInfo)){
-                        System.out.println("creat card");
-                        System.out.println("boardId" + request.getParameter("boardId"));
-                        System.out.println("listId" + request.getParameter("listId"));
-
                         int boardId = Integer.parseInt(request.getParameter("boardId"));
                         int listId = Integer.parseInt(request.getParameter("listId"));
                         String cardDescription = request.getParameter("description");
@@ -131,7 +116,7 @@ public class BoardsServlet extends HttpServlet {
 
                 }
         }catch (Exception e){
-                System.out.println(e);
+                e.printStackTrace();
                 response.sendRedirect("/boards");
         }
     }
@@ -154,19 +139,14 @@ public class BoardsServlet extends HttpServlet {
             else {
                 //update board
                 if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
-                    System.out.println("update board");
-                    int boardId = Integer.parseInt((String) body.get("boardId"));
-                    String boardName = (String) body.get("name");
+                    int boardId = Integer.parseInt(body.get("id").toString());
+                    String boardName = body.get("name").toString();
                     boardDAO.updateName(boardName, boardId);
                     response.setStatus(200);
                     return;
                 }
                 // update list
                 if (Pattern.matches(this.listDetailRegex, pathInfo)) {
-                    System.out.println("update list");
-                    System.out.println("boardId" + request.getParameter("boardId"));
-                    System.out.println("listId" + request.getParameter("listId"));
-
                     int boardId = Integer.parseInt(body.get("boardId").toString());
                     int listId = Integer.parseInt(body.get("listId").toString());
                     String listName = body.get("name").toString();
@@ -175,17 +155,11 @@ public class BoardsServlet extends HttpServlet {
                     return;
                 }
                 if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
-                    System.out.println("update card");
-
                     int boardId = Integer.parseInt(body.get("boardId").toString());
                     int listId = Integer.parseInt(body.get("listId").toString());
                     int cardId = Integer.parseInt(body.get("cardId").toString());
                     String description = body.get("description").toString();
                     cardDAO.updateCardDescription(boardId, listId, cardId, description);
-                    System.out.println("boardId" + boardId);
-                    System.out.println("listId" + listId);
-                    System.out.println("cardId" + cardId);
-                    System.out.println("description" + description);
                     response.setStatus(200);
                     return;
                 }
@@ -203,7 +177,6 @@ public class BoardsServlet extends HttpServlet {
             HttpSession session = request.getSession();
 
             String pathInfo = request.getPathInfo();
-            System.out.println(pathInfo);
             if(session.getAttribute("isAuthenticated") == null)
                 response.sendError(401, "unauthorized");
             else {

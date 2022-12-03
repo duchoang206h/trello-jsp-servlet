@@ -37,10 +37,6 @@
 
         <a href="/boards" class="boards-btn btn">Boards</a>
 
-        <div class="board-search">
-            <input type="search" class="board-search-input" aria-label="Board Search">
-            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-        </div>
 
     </div>
 

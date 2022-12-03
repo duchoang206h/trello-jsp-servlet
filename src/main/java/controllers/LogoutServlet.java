@@ -14,11 +14,10 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
-            session.removeAttribute("isAuthenticated");
-            session.removeAttribute("userId");
+            session.invalidate();
             response.sendRedirect("/index.jsp");
         }catch (Exception e){
-            System.out.print(e);
+            e.printStackTrace();
             response.sendRedirect("/home");
         }
 

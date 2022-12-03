@@ -47,16 +47,18 @@ public class SettingsServlet extends HttpServlet {
                 response.sendError(401, "unauthorized");
             else {
                 //update board
-                if (pathInfo == "/profile") {
-                    System.out.println("update profile");
+                if (pathInfo.equals("/profile")) {
                     String name = body.get("name").toString();
-                    if(userDAO.updateName(name, (int) session.getAttribute("userId"))) response.setStatus(200);
+                    int userId = (int) session.getAttribute("userId");
+                    if(userDAO.updateName(name, userId)) {
+                        session.setAttribute("user", userDAO.findOneById(userId));
+                        response.setStatus(200);
+                    }
                     else response.sendError(409);
                     return;
                 }
                 // update list
-                if (pathInfo == "/reset-password") {
-                    System.out.println("update password");
+                if (pathInfo.equals("/reset-password")) {
                     String oldPassword  = body.get("oldPassword").toString();
                     String newPassword = body.get("newPassword").toString();
                     int userId = (int) session.getAttribute("userId");

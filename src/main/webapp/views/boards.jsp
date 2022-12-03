@@ -45,7 +45,7 @@
         <nav aria-label="Page d-flex justify-content-center navigation example mt-3" >
             <ul class="pagination">
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
+                    <a class="page-link" href=""  onclick="decreasePage(event)" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                         <span class="sr-only">Previous</span>
                     </a>
@@ -59,7 +59,7 @@
                 %> <li class="page-item"><a class="page-link" href="">...</a></li> <%
             %>
                 <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
+                    <a class="page-link" href="" onclick="increasePage(event)" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                         <span class="sr-only">Next</span>
                     </a>
@@ -100,14 +100,14 @@
 
         <form action="" method="post" id="form-edit-board" class="modal-body">
             <input type="text" name="board-id" id="board-id" class="board-id">
-            <textarea class="input-edit-board" name="card-content" id="edit-board" rows="2"></textarea>
+            <textarea class="input-edit-board" name="name" id="edit-board" rows="2"></textarea>
 
             <div class="d-flex justify-content-end">
-                <button class="btn btn-outline-success w-50">
+                <button type="submit" onclick="handleEditBoard(event, 'update')" class="btn btn-outline-success w-50">
                     Update
                 </button>
 
-                <button type="button" class="btn btn-outline-danger w-50">
+                <button type="submit" onclick="handleEditBoard(event, 'delete')" class="btn btn-outline-danger w-50">
                     Delete
                 </button>
             </div>
@@ -116,5 +116,6 @@
 </div>
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js" integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script src="public/js/main.js"></script>
