@@ -45,7 +45,7 @@
                         </div>
                         <div class="form-group">
                             <label for="re_pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                            <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
+                            <input type="password" onchange="checkRepassword()" name="re_pass" id="re_pass" placeholder="Repeat your password"/>
                         </div>
                         <div class="form-group">
                             <a href="/login"> Sign in</a>
@@ -59,6 +59,9 @@
                                     <%
                                 }
                             %>
+                        </div>
+                        <div class="form-group">
+                           <p id="passwordError" style="display: none; color: red"></p>
                         </div>
                         <div class="form-group form-button">
                             <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
@@ -75,6 +78,8 @@
 </div>
 
 <!-- JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.0/axios.min.js" integrity="sha512-OdkysyYNjK4CZHgB+dkw9xQp66hZ9TLqmS2vXaBrftfyJeduVhyy1cOfoxiKdi4/bfgpco6REu6Rb+V2oVIRWg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="public/vendor/jquery/jquery.min.js"></script>
 <script src="public/js/main.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->

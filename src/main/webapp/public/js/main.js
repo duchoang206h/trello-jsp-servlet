@@ -281,3 +281,11 @@ async function handleEditBoard(event, type){
         console.log(e)
     }
 }
+function checkRepassword(){
+    const passwordError = document.getElementById("passwordError");
+    if(document.getElementById("re_pass").value !== document.getElementById("password").value){
+            passwordError.style.display = 'block';
+            passwordError.innerHTML = "password not match";
+            document.getElementById("signup").disabled = true;
+    }else passwordError.style.display = 'none';
+}
