@@ -260,7 +260,7 @@ function decreasePage(event){
     });
     const search = params.search;
     let page = params.page;
-    page = page? Number(page) - 1: 1
+    page = page? (Number(page) - 1 <= 0 ? 0: Number(page) - 1): 1
     if(search){
         window.location.href = `/boards?page=${page}&search=${search}`
     }else{

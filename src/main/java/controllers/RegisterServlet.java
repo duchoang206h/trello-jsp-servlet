@@ -29,9 +29,10 @@ public class RegisterServlet extends HttpServlet {
             HttpSession session = request.getSession();
             if(null == existedUser){
                 userDAO.create(user);
+                UserModel currentUser = userDAO.findOneByEmail(email);
                 session.setAttribute("isAuthenticated", true);
-                session.setAttribute("user", user);
-                session.setAttribute("userId", user.getId());
+                session.setAttribute("user", currentUser);
+                session.setAttribute("userId", currentUser.getId());
                 response.sendRedirect("/home");
             }else {
                 error += "Email exist";

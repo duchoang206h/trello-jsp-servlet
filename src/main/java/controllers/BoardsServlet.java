@@ -86,6 +86,7 @@ public class BoardsServlet extends HttpServlet {
                     if(pathInfo == null){
                         String name = request.getParameter("name");
                         int userId = (int)session.getAttribute("userId");
+                        System.out.println("userId" + userId);
                         BoardModel board = new BoardModel(userId, name);
                         boardDAO.create(board);
                         response.sendRedirect("/boards");
