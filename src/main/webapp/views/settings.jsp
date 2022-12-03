@@ -8,8 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="container">
     <div class="row">
-
-        <div class="col-8">
+        <div class="col-5">
+            <img src="public/images/signin-image.jpg" alt="NNN">
+        </div>
+        <div class="col-7">
             <%
                 UserModel user = (UserModel) session.getAttribute("user");
 
@@ -26,22 +28,26 @@
                         <label for="email" class="form-label">Email</label>
                         <input type="email" name="email" id="email" disabled class="form-control" value="<%=user.getEmail()%>">
                     </div>
-                    <button type="submit"   value="" class="btn btn-success" >Update</button>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit"   value="" class="btn btn-success" >Update</button>
+                    </div>
                 </form>
             <form action="" id="form-reset-password">
                 <div class="password-container">
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="oldPassword" class="form-label">Old password</label>
                         <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="type your old password">
                     </div>
 
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label for="newPassword" class="form-label">New password</label>
                         <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="new password">
                     </div>
                     <p id="passwordError" style="color: red; display: none"></p>
                 </div>
-                <input type="submit" value="Reset password" class="btn btn-success">
+                <div class="d-flex justify-content-end">
+                    <input type="submit" value="Reset password" class="btn btn-success">
+                </div>
             </form>
         </div>
     </div>

@@ -22,7 +22,7 @@
     <div class="row">
         <%
             ArrayList<BoardModel> boards = (ArrayList<BoardModel>) request.getAttribute("boards");
-            if (boards.size() != 0) for(BoardModel board: boards){
+            if (boards!= null) for(BoardModel board: boards){
         %>
         <div class="col-4">
             <a href="boards/<%= board.getId() %>" class="board-container m-2">
