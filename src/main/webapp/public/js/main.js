@@ -193,10 +193,10 @@ function submitList(type){
                 await axios.delete(`/boards/${boardId}/lists/${listId}`, { boardId, listId})
             }
 
-            //location.reload();
+            location.reload();
         }catch (e) {
             console.log(e)
-            //location.reload();
+            location.reload();
         }
     })
 }
