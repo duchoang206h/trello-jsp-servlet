@@ -186,7 +186,7 @@ public class BoardsServlet extends HttpServlet {
                 if (Pattern.matches(this.boardDetailRegex, pathInfo)) {
                         int boardId = idsFromPath.get(0);
                         if (boardDAO.deleteOneById(boardId)) response.setStatus(200);
-                        else response.setStatus(406);
+                        else response.setStatus(409);
                         return;
                 }
                 // update list
@@ -194,7 +194,7 @@ public class BoardsServlet extends HttpServlet {
                         int boardId = idsFromPath.get(0);
                         int listId = idsFromPath.get(1);
                         if (listDAO.deleteOneByBoardIdAndListId(boardId, listId)) response.setStatus(200);
-                        else response.setStatus(406);
+                        else response.setStatus(409);
                         return;
                 }
                 if (Pattern.matches(this.cardDetailRegex, pathInfo)) {
@@ -203,7 +203,7 @@ public class BoardsServlet extends HttpServlet {
                         int listId = idsFromPath.get(1);
                         int cardId = idsFromPath.get(2);
                         if (cardDAO.deleteOne(boardId, listId, cardId)) response.setStatus(200);
-                        else response.setStatus(406);
+                        else response.setStatus(409);
                         return;
                 }
             }

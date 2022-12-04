@@ -120,15 +120,16 @@ public class ListDAO {
     }
     public boolean deleteOneByBoardIdAndListId(int boardId, int listId){
         try {
-            String sql = "delelte from lists where id = ? and boardId = ? limit 1";
+            String sql = "delete from lists where id = ? and boardId = ? limit 1";
             Connection con = DBConnect.getConnection();
             PreparedStatement ps;
             ps = (PreparedStatement) con.prepareStatement(sql);
             ps.setInt(1, listId);
             ps.setInt(2, boardId);
-            ps.executeUpdate();
+            ps.execute();
             return true;
         }catch (Exception e){
+            e.printStackTrace();
             return false;
         }
     }
